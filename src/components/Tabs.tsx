@@ -1,22 +1,20 @@
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
+import Login from './Login'
+import Register from './Register'
 
 const TabsComponent = () => {
     return (
         <Tabs isFitted variant="enclosed">
             <TabList>
-                <Tab>Tab 1</Tab>
-                <Tab>Tab 2</Tab>
-                <Tab>Tab 3</Tab>
+                <Tab _selected={{ color: 'orange', bg: 'blue.500' }}>Sign Up</Tab>
+                <Tab _selected={{ color: 'orange', bg: 'blue.500' }}>Sign In</Tab>
             </TabList>
             <TabPanels>
                 <TabPanel>
-                    <p>one!</p>
+                    <Register/>
                 </TabPanel>
                 <TabPanel>
-                    <p>two!</p>
-                </TabPanel>
-                <TabPanel>
-                    <p>three!</p>
+                    <Login/>
                 </TabPanel>
             </TabPanels>
         </Tabs>

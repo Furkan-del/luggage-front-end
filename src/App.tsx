@@ -1,15 +1,12 @@
 import {ChakraProvider,Heading} from '@chakra-ui/react'
 import "./App.css"
-import  Luggages  from './components/Luggages';
-
-
+import Tabs from './components/Tabs';
 function App() {
-    return ( <>
-        <ChakraProvider>
-        <Heading>Luggage</Heading>
-          <Luggages/>
-        </ChakraProvider>
-      </> )
+return (
+  <ChakraProvider>  
+<Tabs/>
+  </ChakraProvider>
+);
 }
 
 export default App

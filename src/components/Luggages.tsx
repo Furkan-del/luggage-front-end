@@ -14,10 +14,11 @@ import {
 import EditOptions from './EditOptions'
 
   const Luggages = () => {
-    return( <>
+  
+    return( 
     <TableContainer>
   <Table variant='simple'>
-    <TableCaption>Imperial to metric conversion factors</TableCaption>
+  
     <Thead>
       <Tr>
         <Th>Luggage ID</Th>
@@ -35,13 +36,7 @@ import EditOptions from './EditOptions'
         <Td isNumeric>ab</Td>
         <Td isNumeric>b</Td>
         <Td isNumeric>d</Td>
-        <Td >
-            <Select  placeholder='Select option' ><option value='Pending'>Pending</option> 
-            <option value="Completed">Completed</option>
-            <option value="In Airport">In Airport</option>
-             </Select>
-            <Button>Send </Button>
-        </Td>
+        <Td> <EditOptions/></Td>
       </Tr>
       <Tr>
       <Td>yards</Td>
@@ -49,7 +44,7 @@ import EditOptions from './EditOptions'
         <Td isNumeric>ab</Td>
         <Td isNumeric>b</Td>
         <Td isNumeric>d</Td>
-        <Td isNumeric> <EditOptions/></Td>
+        <Td > <EditOptions/></Td>
       </Tr>
       <Tr>
       <Td>yards</Td>
@@ -57,7 +52,7 @@ import EditOptions from './EditOptions'
         <Td isNumeric>ab</Td>
         <Td isNumeric>b</Td>
         <Td isNumeric>d</Td>
-        <Td isNumeric> </Td>
+        <Td > <EditOptions/></Td>
       </Tr>
       <Tr>
         <Td>yards</Td>
@@ -65,18 +60,11 @@ import EditOptions from './EditOptions'
         <Td isNumeric>ab</Td>
         <Td isNumeric>b</Td>
         <Td isNumeric>d</Td>
-        <Td isNumeric> </Td>
+        <Td> <EditOptions/></Td>
       </Tr>
     </Tbody>
-    <Tfoot>
-      <Tr>
-        <Th>To convert</Th>
-        <Th>into</Th>
-        <Th isNumeric>multiply by</Th>
-      </Tr>
-    </Tfoot>
   </Table>
-</TableContainer> </>
+</TableContainer> 
     )
 }
 export default Luggages
