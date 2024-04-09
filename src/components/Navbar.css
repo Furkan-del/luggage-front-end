@@ -1,0 +1,22 @@
+.navbar-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+    background-color: #d73601; 
+    color: white;
+    padding: 10px 0;
+  }
+  
+
+  .navbar-container a {
+    text-decoration: none;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+  
+    
+  .navbar-container a:hover {
+    background-color: gray;
+  }

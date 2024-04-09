@@ -1,6 +1,8 @@
+import { Heading } from "@chakra-ui/react";
+
  const HomePage = () => {
     return (
-        <p>Home Page</p>
+        <Heading as="h1" size="lg">Welcome to the Luggage Management System</Heading>
     )
     
  };

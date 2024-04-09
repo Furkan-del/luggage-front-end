@@ -13,3 +13,4 @@ html, body, #root, .App{
     touch-action:               pan-x pan-y;
     transition:                 all 1s;
 }
+
