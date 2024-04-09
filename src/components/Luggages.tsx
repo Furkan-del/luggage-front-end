@@ -9,9 +9,42 @@ import {
     Heading
   } from '@chakra-ui/react' 
 import EditOptions from './EditOptions'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
 
+interface Luggage {
+  luggageId: number;
+  weight: number;
+  flightId: number;
+  customerId: number;
+  state:string;
+}
+ 
   const Luggages = () => {
+    const [flights, setFlights] = useState<Luggage[]>([]);
+
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await apiClient.get<Luggage[]>('');
+          setFlights(response.data);
+        } catch (error) {
+          console.error('Error fetching data: ', error);
+        }
+      };
   
+      fetchData();
+    }, []);
+  const apiClient = axios.create({
+    baseURL: "http://localhost:7074/api/v1/luggage",
+    headers: {
+      "Content-type": "application/json",
+    },
+  });
+
+  
+
+
     return( 
     <TableContainer>
   <Table variant='simple'>
@@ -27,38 +60,19 @@ import EditOptions from './EditOptions'
       </Tr>
     </Thead>
     <Tbody>
-      <Tr>
-      <Td>yards</Td>
-        <Td>metres (m)</Td>
-        <Td isNumeric>ab</Td>
-        <Td isNumeric>b</Td>
-        <Td isNumeric>d</Td>
-        <Td> <EditOptions/></Td>
-      </Tr>
-      <Tr>
-      <Td>yards</Td>
-        <Td>metres (m)</Td>
-        <Td isNumeric>ab</Td>
-        <Td isNumeric>b</Td>
-        <Td isNumeric>d</Td>
-        <Td > <EditOptions/></Td>
-      </Tr>
-      <Tr>
-      <Td>yards</Td>
-        <Td>metres (m)</Td>
-        <Td isNumeric>ab</Td>
-        <Td isNumeric>b</Td>
-        <Td isNumeric>d</Td>
-        <Td > <EditOptions/></Td>
-      </Tr>
-      <Tr>
-        <Td>yards</Td>
-        <Td>metres (m)</Td>
-        <Td isNumeric>ab</Td>
-        <Td isNumeric>b</Td>
-        <Td isNumeric>d</Td>
-        <Td> <EditOptions/></Td>
-      </Tr>
+      {
+        flights.map((flight,index)=> 
+        <Tr key={index}> 
+        <Td>{flight.luggageId}</Td>
+          <Td>{flight.weight} </Td>
+          <Td>{flight.flightId}</Td>
+          <Td>{flight.customerId}</Td>
+          <Td>{flight.state}</Td>
+          <Td><EditOptions/></Td>
+        </Tr>)
+      }
+      
+      
     </Tbody>
   </Table>
 </TableContainer> 
