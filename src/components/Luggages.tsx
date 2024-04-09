@@ -9,7 +9,8 @@ import {
     TableCaption,
     TableContainer,
     Button,
-    Select
+    Select,
+    Heading
   } from '@chakra-ui/react' 
 import EditOptions from './EditOptions'
 
@@ -18,7 +19,7 @@ import EditOptions from './EditOptions'
     return( 
     <TableContainer>
   <Table variant='simple'>
-  
+  <Heading as="h2" size="md">Luggages</Heading>
     <Thead>
       <Tr>
         <Th>Luggage ID</Th>
