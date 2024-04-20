@@ -22,29 +22,6 @@ interface Luggage {
  
   const Luggages = () => {
     const [flights, setFlights] = useState<Luggage[]>([]);
-
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const response = await apiClient.get<Luggage[]>('');
-          setFlights(response.data);
-        } catch (error) {
-          console.error('Error fetching data: ', error);
-        }
-      };
-  
-      fetchData();
-    }, []);
-  const apiClient = axios.create({
-    baseURL: "http://localhost:7074/api/v1/luggage",
-    headers: {
-      "Content-type": "application/json",
-    },
-  });
-
-  
-
-
     return( 
     <TableContainer>
   <Table variant='simple'>
