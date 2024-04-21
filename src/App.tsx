@@ -1,15 +1,14 @@
-import {ChakraProvider,Heading} from '@chakra-ui/react'
+import {ChakraProvider} from '@chakra-ui/react'
 import "./App.css"
 import CreateFlight from './components/CreateFlight';
 import Login from './components/Login';
 import { BrowserRouter,Route,Routes} from 'react-router-dom';
-import Tabs from './components/Tabs';
 import Navbar from './components/Navbar';
 import HomePage from './components/HomePage';
 import Register from './components/Register';
 import Luggages from './components/Luggages';
 import Flights from './components/Flights';
-import Customers from './components/Customers';
+import Passenger from './components/Passengers';
 function App() {
 return (
   <ChakraProvider> 
@@ -21,8 +20,10 @@ return (
     <Route path="/createFlight" element={<CreateFlight/>}/>
     <Route path="/luggages" element={<Luggages/>}/>
     <Route path="/flights" element={<Flights/>}/>
-    <Route path="/customers" element={<Customers/>}/>
+    <Route path="/passengers" element={<Passenger/>}/>
     <Route path="/" element={<HomePage/>}/>
+    <Route path = "/flights/:flightId/passengers" element = {<Passenger/>}/>
+    <Route path = "/flights/:flightId/passengers/:passengerId/luggages" element = {<Luggages/>}/>
     </Routes>
     </BrowserRouter>
   

@@ -1,7 +1,5 @@
 import LuggageDto from "./LuggageDto";
-import LuggageResponse from "./LuggageResponse";
 import PassengerDto from "./PassengerDto";
-import PassengerResponse from "./PassengerResponse";
 
 export default interface FlightResponse{
     id?:any | null,

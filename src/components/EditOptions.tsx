@@ -3,26 +3,22 @@ import {
     MenuButton,
     MenuList,
     MenuItem,
-    MenuItemOption,
-    MenuGroup,
-    MenuOptionGroup,
-    MenuDivider,
     Button,
     
   } from '@chakra-ui/react'
 
-  const EditOptions = () => {
-    return( <Menu>
-    <MenuButton as={Button}  >
-      Actions
+  const EditOptions = (props:any) => {
+    return(<Menu>
+    <MenuButton as={Button} onClick={props.onClick}>
+      CHANGE STATUS
     </MenuButton>
     <MenuList>
-      <MenuItem>Download</MenuItem>
-      <MenuItem>Create a Copy</MenuItem>
-      <MenuItem>Mark as Draft</MenuItem>
-      <MenuItem>Delete</MenuItem>
-      <MenuItem>Attend a Workshop</MenuItem>
+      <MenuItem>WAITING</MenuItem>
+      <MenuItem>IN WAY</MenuItem>
+      <MenuItem>IN AIRPORT</MenuItem>
+      <MenuItem>IN CHECK IN</MenuItem>
+      <MenuItem>IN PLANE</MenuItem>
     </MenuList> 
-  </Menu> )
-  }
+  </Menu> 
+  )}
   export default EditOptions

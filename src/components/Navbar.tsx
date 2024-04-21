@@ -10,7 +10,7 @@ import HomePage from "./HomePage";
       <NavLink to="/createFlight">Create Flight</NavLink>
       <NavLink to="/luggages">Luggages</NavLink>
       <NavLink to="/flights">Flights</NavLink>
-      <NavLink to="/customers">Customers</NavLink>
+      <NavLink to="/passengers">Passengers</NavLink>
     </nav>
   );
 }

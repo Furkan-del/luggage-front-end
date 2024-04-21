@@ -9,19 +9,40 @@ import {
     Heading
   } from '@chakra-ui/react' 
 import EditOptions from './EditOptions'
-import axios from 'axios'
 import { useEffect, useState } from 'react'
+import LuggageResponse from './types/LuggageResponse';
+import AppService from './services/AppService';
+import { useParams } from 'react-router-dom';
 
-interface Luggage {
-  luggageId: number;
-  weight: number;
-  flightId: number;
-  customerId: number;
-  state:string;
-}
+
  
   const Luggages = () => {
-    const [flights, setFlights] = useState<Luggage[]>([]);
+    const {flightId,passengerId}  =  useParams();
+    const [luggages, setLuggages] = useState<LuggageResponse[]>([]);
+    const [state,setState] = useState<string>("")
+    
+    useEffect(() => {
+      if(flightId && passengerId)
+      retrieveLuggagesByPassengerAndFlight(flightId,passengerId);
+    },[flightId,passengerId])
+
+    const retrieveLuggagesByPassengerAndFlight = (flightId:any,passengerId:any) => {
+
+      AppService.getAllLuggagesByPassengerAndFlight(flightId,passengerId)
+      .then((response : any) =>  {
+        setLuggages(response.data)
+        console.log(response.data)
+       })
+      .catch( (e:Error) => (
+        console.log(e)
+      ))
+
+    }
+
+const handleClick = (e:any) => {
+    setState(e.target.value)
+} 
+
     return( 
     <TableContainer>
   <Table variant='simple'>
@@ -29,27 +50,26 @@ interface Luggage {
     <Thead>
       <Tr>
         <Th>Luggage ID</Th>
+        <Th>Luggage Name</Th>
         <Th>Weight</Th>
-        <Th isNumeric>Flight ID</Th>
-        <Th isNumeric>Customer ID</Th>
-        <Th isNumeric>State</Th>
-        <Th isNumeric>Edit State</Th>
+        <Th >Flight Departure Name</Th>
+        <Th >Passenger Name</Th>
+        <Th >State</Th>
+        <Th >Edit State</Th>
       </Tr>
     </Thead>
     <Tbody>
-      {
-        flights.map((flight,index)=> 
-        <Tr key={index}> 
-        <Td>{flight.luggageId}</Td>
-          <Td>{flight.weight} </Td>
-          <Td>{flight.flightId}</Td>
-          <Td>{flight.customerId}</Td>
-          <Td>{flight.state}</Td>
-          <Td><EditOptions/></Td>
-        </Tr>)
-      }
-      
-      
+      {luggages.map((luggage) => (
+        <Tr> 
+        <Td>{luggage.id}</Td>
+          <Td>{luggage.luggageName} </Td>
+          <Td>{luggage.weight}</Td>
+          <Td>{luggage.flight.departureLocationOfFlight}</Td>
+          <Td>{luggage.passenger.name}</Td>
+          <Td>{luggage.state}</Td>
+          <Td><EditOptions onClick={handleClick} /></Td>
+        </Tr>
+       ))}
     </Tbody>
   </Table>
 </TableContainer> 
