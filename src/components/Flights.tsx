@@ -11,10 +11,7 @@ import {
 import { useEffect, useState } from 'react'
 import FlightResponse from './types/FlightResponse'
 import AppService from './services/AppService'
-import { Button } from 'react-day-picker'
 import { Link, useParams } from 'react-router-dom'
-import EditOptions from './EditOptions'
-
   const Flights = () => {
     const [flights,setFlights]=useState<FlightResponse []>([])
 
@@ -61,7 +58,7 @@ import EditOptions from './EditOptions'
         <Td> {flight.departureDate} </Td>
         <Td >{flight.departureLocation} </Td>
         <Td > {flight.arrivalLocation} </Td>
-        <Td > {flight.luggages.map((luggageInfo) =>( luggageInfo.name))} </Td>
+        <Td > {flight?.luggages?.map((luggageInfo) =>( luggageInfo.name))} </Td>
         <Td><Link to =  {`/flights/${flight.id}/passengers`}>See Passengers </Link> </Td>
       </Tr>
       ))}

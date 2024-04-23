@@ -1,15 +1,14 @@
 import LuggageDto from "./LuggageDto";
 import PassengerDto from "./PassengerDto";
 
-// bu response bize atılan istek sonrası dönecek datadır get isteklerinde bu veriler backendden frontende basılır buna göre frontendi oluşturmak gerekir
-export default interface FlightResponse{
-    id?:any | null,
+// bu bizim request atıcağımız model front-end tasarımını buradan alacağımız verilere göre düzenlemen lazım nulları boşver düşünme
+export default interface CreateFlightRequest{
     pnrCode:string,
     departureDate:string,
     departureLocation:string,
     arrivalLocation:string,
     returnDate:string,
     passengerType:string,
-    passengers:PassengerDto [] | null ,
+    passengers:PassengerDto [] | null,
     luggages:LuggageDto [] | null
-}
+ }

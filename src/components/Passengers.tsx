@@ -15,9 +15,12 @@ import { Link, useParams } from 'react-router-dom';
 
 
   const Passenger = () => {
+    // useParams urlden id gibi değişken değerlerini çekmemizi sağlar bu sayede backende istek atarız o değerlerle.
     const { flightId }= useParams();
   const [passengers,setPassengers] = useState<PassengerResponse []> ([]);
   
+  // uygulamanın renderlanmadan önce bu queryi çalıştırır lakin burada şu önemli eğer bir değer paslanıyorsa içine.
+  // o değer değiştiğinde çalışır aynıysa bidaha query atmaz.
     useEffect(() => {
       if(flightId)
     retrievePassengers(flightId);
@@ -45,6 +48,7 @@ import { Link, useParams } from 'react-router-dom';
         <Th>Name</Th>
         <Th >Email</Th>
         <Th >Phone Number</Th>
+        <Th >Luggage Detail</Th>
       </Tr>
     </Thead>
     <Tbody>
