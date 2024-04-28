@@ -9,8 +9,11 @@ import Register from './components/Register';
 import Luggages from './components/Luggages';
 import Flights from './components/Flights';
 import Passenger from './components/Passengers';
+import { PrimeReactProvider } from 'primereact/api';
+        
 function App() {
 return (
+  <PrimeReactProvider>
   <ChakraProvider> 
     <BrowserRouter>
     <Navbar/>
@@ -28,6 +31,7 @@ return (
     </BrowserRouter>
   
   </ChakraProvider>
+  </PrimeReactProvider>
  );
 }
 
