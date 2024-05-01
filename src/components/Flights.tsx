@@ -8,15 +8,16 @@ import {
   Td,
   TableContainer,
   Input,
+  Button,
 } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import {ChangeEvent, useEffect, useState } from 'react';
 import FlightResponse from './types/FlightResponse';
 import AppService from './services/AppService';
 import { Link, useParams } from 'react-router-dom';
 
 const Flights = () => {
   const [flights, setFlights] = useState<FlightResponse[]>([]);
-  const [search, setSearch] = useState<string>('');
+  const [searchTitle, setsearchTitle] = useState<string>('');
 
   useEffect(() => {
     retrieveFlights();
@@ -25,6 +26,7 @@ const Flights = () => {
   const retrieveFlights = () => {
     AppService.getAllFlights()
       .then((response: any) => {
+
         setFlights(response.data);
         console.log(response.data);
       })
@@ -34,6 +36,23 @@ const Flights = () => {
       });
   };
 
+  const findByPnrCode = (searchTitle:string) => {
+      setsearchTitle(searchTitle)
+      if( searchTitle.length > 0) {
+        AppService.findByPnrCode(searchTitle)
+        .then((response : any) => {
+          let flightsTemp = flights.filter(flight => flight.pnrCode === response.data.pnrCode);
+          setFlights(flightsTemp);
+        } )
+        .catch((e:Error) => {
+          setFlights([])
+            console.log(e)
+        }) 
+        return 
+      } 
+      retrieveFlights()
+  }
+
   return (
     <>
       <Heading as="h1" size="lg" mb={4}>
@@ -41,10 +60,17 @@ const Flights = () => {
       </Heading>
       <Input
         placeholder="PNR Code"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        value={searchTitle}
+        onChange={(e) => findByPnrCode(e.target.value)}
         mb={4}
       />
+      <Button
+              className="btn btn-outline-secondary"
+              type="button"
+              colorScheme='orange'
+            >
+              Search
+            </Button>
       <TableContainer>
         <Table variant="simple">
           <Thead>
@@ -59,13 +85,7 @@ const Flights = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {flights
-              .filter((flight) =>
-                search
-                  ? flight.id.toLowerCase().includes(search.toLowerCase()) ||
-                    flight.pnrCode.toLowerCase().includes(search.toLowerCase())
-                  : true
-              )
+            { flights
               .map((flight, index) => (
                 <Tr key={index}>
                   <Td>{flight.id}</Td>

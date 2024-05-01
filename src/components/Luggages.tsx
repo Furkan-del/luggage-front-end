@@ -19,10 +19,7 @@ import UpdateLuggageRequest from './types/UpdateLuggage';
  
   const Luggages = () => {
 
-    const initialState = {
-      state : "WAITING"
-    }
-
+    
     const {flightId,passengerId}  =  useParams();
     const [luggages, setLuggages] = useState<LuggageResponse[]>([]);
     const [state,setState] = useState<string>("")
