@@ -23,7 +23,7 @@ const getAllLuggagesByPassengerAndFlight = (flightId:any,passengerId:any) =>{
 }
 
 const createFlight = (request:CreateFlightRequest) => {
-    return http.post<FlightResponse> ("/flights",request)
+    return http.post<any> ("/flights",request)
 } 
 
 const updateLuggage = (flightId:any,passengerId:any,luggageId:any, state : any ) => {
@@ -31,7 +31,7 @@ const updateLuggage = (flightId:any,passengerId:any,luggageId:any, state : any )
 }
 
 const findByPnrCode = (pnrCode:string) => {
-    return http.get<any>(`/flights?pnrCode=${pnrCode}`)
+    return http.get<any>(`/flights/pnr-code?pnrCode=${pnrCode}`)
 }
 
 export default {getAllFlights,getAllPassengers,getFlightById,getAllLuggagesByPassengerAndFlight,createFlight,updateLuggage,findByPnrCode}
