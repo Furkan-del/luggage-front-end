@@ -1,13 +1,14 @@
-import { NavLink } from "react-router-dom";
-import './Navbar.css'
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import './UserNavbar.css'; 
 
 const UserNavbar = () => {
   return (
-    <nav className="user-navbar-container">
-      <NavLink to="/" className={({ isActive }) => isActive ? "active-link" : ""}>Home</NavLink>
-      <NavLink to="/create-passenger" className={({ isActive }) => isActive ? "active-link" : ""}>Create Passenger</NavLink>
-      <NavLink to="/create-address" className={({ isActive }) => isActive ? "active-link" : ""}>Create Address</NavLink>
-      <NavLink to="/create-luggage" className={({ isActive }) => isActive ? "active-link" : ""}> Create Luggage</NavLink>
+    <nav className="navbar-container">
+      <NavLink to="/userside/">Home</NavLink>
+      <NavLink to="/userside/createPassenger">Create Passenger</NavLink>
+      <NavLink to="/userside/address"> Add Address</NavLink>
+      <NavLink to="/userside/luggage"> Add Luggage</NavLink>
     </nav>
   );
 }

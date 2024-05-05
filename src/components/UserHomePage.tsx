@@ -1,12 +1,10 @@
-import React from 'react';
+import { Heading } from "@chakra-ui/react";
 
-const HomePage = () => {
+ const UserHomePage = () => {
     return (
-        <div>
-            <h1>Home Page</h1>
-            <p>Welcome to the user side of the application!</p>
-        </div>
-    );
-}
+        <Heading as="h1" size="lg">Welcome to the user side</Heading>
+    )
+    
+ };
 
-export default HomePage;
+ export default UserHomePage;
