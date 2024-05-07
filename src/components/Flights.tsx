@@ -10,7 +10,7 @@ import {
   Input,
   Button,
 } from '@chakra-ui/react';
-import {ChangeEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import FlightResponse from './types/FlightResponse';
 import AppService from './services/AppService';
 import { Link, useParams } from 'react-router-dom';
@@ -78,9 +78,9 @@ const Flights = () => {
               <Th>Flight ID</Th>
               <Th isNumeric>PNR Code</Th>
               <Th isNumeric>Flight Date</Th>
-              <Th isNumeric>Departure Location</Th>
-              <Th isNumeric>Arrival Location</Th>
-              <Th isNumeric>Baggage Name</Th>
+              <Th >Departure Location</Th>
+              <Th >Arrival Location</Th>
+              <Th >Baggage Name</Th>
               <Th>Flight Detail</Th>
             </Tr>
           </Thead>
@@ -97,7 +97,7 @@ const Flights = () => {
                     {flight?.luggages?.map((luggageInfo) => luggageInfo.name)}
                   </Td>
                   <Td>
-                    <Link to={`/flights/${flight.id}/passengers`}>
+                    <Link to={`/backoffice/flights/${flight.id}/passengers`}>
                       See Passengers
                     </Link>
                   </Td>

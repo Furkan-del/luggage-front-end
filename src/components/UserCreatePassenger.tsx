@@ -1,25 +1,47 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import AppService from './services/AppService';
+import { Link, useParams } from 'react-router-dom';
+import { TableContainer, Table, Thead, Tr, Th, Tbody, Td } from '@chakra-ui/react';
+import PassengerResponse from './types/PassengerResponse';
 
-// Interface for passenger data
+
 interface Passenger {
     name: string;
     email: string;
-    phoneNumber: string;
+    phoneNumber: string
+    id?: any;
 }
 
-// Interface for Table component props
-interface TableProps {
-    passengerList: Passenger[];
-}
-
-// Form component to create a passenger
 const UserCreatePassenger: React.FC = () => {
+    
+    const {flightId} = useParams()
+    
+    const [passengerInfos,setPassengerInfos] = useState<PassengerResponse > ();
+  
+    // uygulamanın renderlanmadan önce bu queryi çalıştırır lakin burada şu önemli eğer bir değer paslanıyorsa içine.
+    // o değer değiştiğinde çalışır aynıysa bidaha query atmaz.
+      useEffect(() => {
+        if(flightId)
+        retrievePassengerById(flightId,passengerInfos?.id);
+      },[flightId])
+  
+      const retrievePassengerById = (flightId:any,passengerId:any) => {
+        AppService.getPassengerById(flightId,passengerId)
+        .then((response:any) => {
+            setPassengerInfos(response.data)
+          console.log(response.data)
+        })
+        .catch( (e:Error) => {
+          console.log(e)
+        })
+      }
+
+
     const [passenger, setPassenger] = useState<Passenger>({
         name: '',
         email: '',
         phoneNumber: ''
     });
-    const [passengerList, setPassengerList] = useState<Passenger[]>([]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -29,15 +51,37 @@ const UserCreatePassenger: React.FC = () => {
         }));
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+   
+
+    const handleCreatePassengerSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        setPassengerList(prevList => [...prevList, passenger]);
-        setPassenger({ name: '', email: '', phoneNumber: '' }); // Reset form
+
+        var createPassenger = {
+            id: null,
+            name: passenger.name,
+            email: passenger.email,
+            phoneNumber: passenger.phoneNumber,
+            flight:null
+    }
+       
+        AppService.addPassenger(createPassenger, flightId)
+            .then((response: any) => {
+
+                setPassenger({
+                    ...passenger,
+                    id: response.id,
+                    name: response.pnrCode,
+                    email: response.departureLocation,
+                    phoneNumber: response.arrivalLocation
+                });
+            })
+            .catch((e: Error) => e.stack);
+        
     };
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleCreatePassengerSubmit}>
                 <label>
                     Name:
                     <input 
@@ -82,38 +126,38 @@ const UserCreatePassenger: React.FC = () => {
         transition: 'background-color 0.3s' 
     }}
     onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f57c00'} 
-    onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'blue'}  
->
+    onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'blue'}  >
     Add Passenger
 </button>
             </form>
-            <Table passengerList={passengerList} />
-        </div>
+         <TableContainer>
+        <Table variant="simple">
+          <Thead>
+            <Tr>
+              <Th >Passenger Name</Th>
+              <Th >Passenger Mail</Th>
+              <Th>Passenger  Phone Number</Th>
+              <Th>Give address</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+                <Tr key={passengerInfos?.id}>
+                  <Td>{passengerInfos?.passengerName}</Td>
+                  <Td>{passengerInfos?.email}</Td>
+                  <Td>{passengerInfos?.phoneNumber}</Td>
+                  <Td>
+                    <Link to={`/homepage/flights/${flightId}/passengers/${passengerInfos?.id}/addresses`}>
+                    Add Addresses
+                    </Link>
+                  </Td>
+                </Tr>
+          </Tbody>
+        </Table>
+      </TableContainer>
+       </div>
+       
     );
 };
 
-// Table component to display passenger data
-const Table: React.FC<TableProps> = ({ passengerList }) => {
-    return (
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                {passengerList.map((passenger, index) => (
-                    <tr key={index}>
-                        <td>{passenger.name}</td>
-                        <td>{passenger.email}</td>
-                        <td>{passenger.phoneNumber}</td>
-                    </tr>
-                ))}
-            </tbody>
-        </table>
-    );
-};
 
 export default UserCreatePassenger;

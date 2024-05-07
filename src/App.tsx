@@ -43,13 +43,15 @@ function App() {
             </>} />
 
             {/* User-side routes */}
-            <Route path="/userside/*" element={<>
+            <Route path="/homepage/*" element={<>
               <UserNavbar />
               <Routes>
-                <Route path="createPassenger" element={<UserCreatePassenger />} />
-                <Route path="address" element={<UserAddressPage />} />
+              <Route path="flights/:flightId/passengers" element={<UserCreatePassenger />} />
                 <Route path="luggage" element={<UserLuggage />} />
+                <Route path="login" element={<Login />} />
                 <Route index element={<UserHomePage />} />
+                <Route path="register" element={<Register />} />
+                <Route path="flights/:flightId/passengers/:passengerId/addresses" element={<UserAddressPage/>} />
               </Routes>
             </>} />
           </Routes>
