@@ -7,20 +7,15 @@ import {
   Box,
   VStack
 } from '@chakra-ui/react';
+import AppService from './services/AppService';
+import { useParams } from 'react-router-dom';
+import CreateAddressRequest from './types/CreateAddressRequest';
 
-interface Address {
-  addressName?: string;
-  street: string;
-  avenue: string;
-  apartmentName: string;
-  floor: string;
-  doorNumber: string;
-  city: string;
-  country: string;
-}
 
 const CreateAddress: React.FC = () => {
-  const [address, setAddress] = useState<Address>({
+  const {passengerId} = useParams()
+
+  const [address, setAddress] = useState<CreateAddressRequest>({
     addressName: '',
     street: '',
     avenue: '',
@@ -39,9 +34,30 @@ const CreateAddress: React.FC = () => {
     }));
   };
 
+const handleCreateAddress= () => {
+
+
+    AppService.createAddress(address,passengerId).then((response) => {
+
+    setAddress({
+      addressName: response.data.addressName,
+      street: response.data.street,
+      avenue: response.data.avenue,
+      apartmentName: response.data.apartmentName,
+      floor: response.data.floor,
+      doorNumber: response.data.doorNumber,
+      city: response.data.city,
+      country: response.data.country
+    })}
+    
+    ).catch(
+      (error:Error) => console.log(error)
+    );
+}
+
   return (
     <Box p={5} shadow="md" borderWidth="1px">
-      <form onSubmit={(e) => { e.preventDefault(); console.log(address); }}>
+      <form onSubmit={handleCreateAddress}>
         <VStack spacing={4}>
           <FormControl isRequired>
             <FormLabel>Address Name</FormLabel>

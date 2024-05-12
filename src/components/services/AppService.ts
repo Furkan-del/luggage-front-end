@@ -1,4 +1,4 @@
-import http from '../http-commons';
+import axios from 'axios';
 import AddPassengerResponse from '../types/AddPassengerResponse';
 import CreateAddressRequest from '../types/CreateAddressRequest';
 import CreateFlightRequest from '../types/CreateFlightRequest';
@@ -9,60 +9,86 @@ import LuggageResponse from '../types/LuggageResponse';
 import PassengerResponse from '../types/PassengerResponse';
 import RegisterRequest from '../types/RegisterRequest';
 
+const API_URL = 'http://localhost:8080'
+
 //burası clienttır client backende istek atar.client eğer pathi ve requesti düzgün atarsa backendden cevap alacak bu pathler sayesinde.
 const getAllFlights = () => {
-    return http.get<FlightResponse []>("/flights")
+    return axios.get<FlightResponse []>(`${API_URL}/flights`, { headers: {
+        "Access-Control-Allow-Headers":"Content-type,Authorization",
+        "Content-type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+    }})
 }
 
 const getFlightById = (flightId:any) => {
-return http.get<FlightResponse>(`/flights/${flightId}`) 
+    return axios.get<FlightResponse>(`${API_URL}/flights/${flightId}`,{ headers: {
+        "Access-Control-Allow-Headers":"Content-type,Authorization",
+        "Content-type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+    }}) 
 }
 
 const getAllPassengers = (flightId:any) => {
- return  http.get<PassengerResponse []>(`/flights/${flightId}/passengers`) 
+    return axios.get<PassengerResponse []>(`${API_URL}/flights/${flightId}/passengers`,{ headers: {
+        "Access-Control-Allow-Headers":"Content-type,Authorization",
+        "Content-type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+    }}) 
 }
 
 const getPassengerById = (flightId:any,passengerId:any) => {
-    return  http.get<PassengerResponse []>(`/flights/${flightId}/passengers/${passengerId}`) 
+    return  axios.get<PassengerResponse []>(`/flights/${flightId}/passengers/${passengerId}`,{ headers: {
+        "Access-Control-Allow-Headers":"Content-type,Authorization",
+        "Content-type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+    }}) 
    }
    
 
 const getAllLuggagesByPassengerAndFlight = (flightId:any,passengerId:any) =>{
-    return http.get<LuggageResponse []>(`/flights/${flightId}/passengers/${passengerId}/luggages`)
+    return axios.get<LuggageResponse []>(`/flights/${flightId}/passengers/${passengerId}/luggages`)
 }
 
 const createFlight = (request:CreateFlightRequest) => {
-    return http.post<any> ("/flights",request)
+    return axios.post<any> (`${API_URL}/flights`,request)
 } 
 
 const updateLuggage = (flightId:any,passengerId:any,luggageId:any, state : any ) => {
-    return http.put<any>(`/flights/${flightId}/passengers/${passengerId}/luggages/${luggageId}`,state)
+    return axios.put<any>(`/flights/${flightId}/passengers/${passengerId}/luggages/${luggageId}`,state)
 }
 
 const findByPnrCode = (pnrCode:string) => {
-    return http.get<any>(`/flights/pnr-code?pnrCode=${pnrCode}`)
+    return axios.get<any>(`/flights/pnr-code?pnrCode=${pnrCode}`)
 }
 
 const addPassenger = (createPassengerRequest:CreatePassengerRequest,flightId:any) => {
-    return http.post<AddPassengerResponse>(`/flights/${flightId}/passengers`,createPassengerRequest)
+    return axios.post<AddPassengerResponse>(`/flights/${flightId}/passengers`,createPassengerRequest)
 }
 
 const registerUser = (request:RegisterRequest) => {
-      return http.post<any>('/auth/register',request)
+      return axios.post<any>(`${API_URL}/auth/register`,request,{ headers: {
+        "Access-Control-Allow-Headers":"Content-type,Authorization",
+        "Content-type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+    }})
 
 }
 
 const logInUser = (request:LoginRequest) => {
-    return http.post<any>('/auth/login',request)
+    return axios.post<any>(`${API_URL}/auth/login`,request,{ headers: {
+        "Access-Control-Allow-Headers":"Content-type,Authorization",
+        "Content-type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+    }})
 }
 
 const createAddress = (request:CreateAddressRequest,passengerId:any) => {
-    return http.post<any>(`/passengers/${passengerId}/addresses`,request)
+    return axios.post<any>(`/passengers/${passengerId}/addresses`,request)
 }
 
 
 const getAddresses = (passengerId:any,addressId:any) => {
-    return http.get<any>(`/passengers/${passengerId}/addresses/${addressId}`)
+    return axios.get<any>(`/passengers/${passengerId}/addresses/${addressId}`)
 }
 
 export default {getAllFlights,getAllPassengers,getFlightById,

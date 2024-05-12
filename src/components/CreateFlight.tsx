@@ -8,7 +8,7 @@ import AppService from './services/AppService';
 
 
 
-const CreateFlight = (  ) => {
+const CreateFlight = () => {
     const [firstDate, setFirstDate] = useState<Date>();
     const [secondDate, setSecondDate] = useState<Date>();
 

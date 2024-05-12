@@ -1,9 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import AuthContextType from '../types/AuthContextType';
 
-interface AuthContextType { //bunu da types a almak lazım
-  token: string | null;
-  setToken: (token: string | null) => void;
-}
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 

@@ -1,22 +1,37 @@
-import { Input,Stack,Heading, Button } from '@chakra-ui/react'
-import AppService from './services/AppService'
+
 import { useState } from 'react'
+import AppService from './services/AppService'
+import RegisterRequest from './types/RegisterRequest'
 
 
-const Register = ( ) => {
-    var initialData = {
-        fullName:"",
-        email:"",
-        password:"",
-        phoneNumber:""
-    }
-const [registerData,setRegisterData] = useState(initialData)
+const Register = () => {
+   
+const [registerData,setRegisterData] = useState<RegisterRequest>({
+    fullName:"dsa",
+    email:"a",
+    password:"dsf",
+    phoneNumber:"dfsf"
+})
 
-const handleClick = () =>{
+const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setRegisterData(registerData => ({
+      ...registerData,
+      [name]: value
+    }));
+  };
 
-    var registerRequest = { ...registerData  }
+const handleClick = (e: React.FormEvent) =>{
 
-    AppService.registerUser(registerRequest)
+    e.preventDefault()
+    var createRegister = {
+        fullName: registerData.fullName,
+        password: registerData.email,
+        phoneNumber: registerData.phoneNumber,
+        email:registerData.password
+}
+
+    AppService.registerUser(createRegister)
     .then((response:any) => {
             setRegisterData(
                 {
@@ -26,23 +41,74 @@ const handleClick = () =>{
         phoneNumber: response.phoneNumber
                 }
             )
-
+    })
+    .catch((e:Error ) => {
+        console.log(e)
     })
 }
 
-
-
     return (
-        <>
-        <Heading style={ {textAlign : "center" , color : "orange"}} >Register</Heading>
-        <Stack  style={ {alignItems : "center"}} spacing={3}>
-            <Input onChange={(e) => setRegisterData({...registerData, fullName:e.target.value })} value={registerData.fullName} style={ {width : "300px"}} placeholder='Full Name' size='md'/>
-            <Input onChange={(e) => setRegisterData({...registerData, password:e.target.value })}  value={registerData.password} style={ {width : "300px"}} placeholder='Password' size='md' />
-            <Input onChange={(e) => setRegisterData({...registerData, email:e.target.value })}  value={registerData.email} style={ {width : "300px"}} placeholder='Email' size='md' />
-            <Input onChange={(e) => setRegisterData({...registerData, phoneNumber:e.target.value })}  value={registerData.phoneNumber} style={ {width : "300px"}} placeholder='Phone Number' size='md' />
-            <Button onClick={handleClick} colorScheme='orange' >SEND</Button>
-            </Stack>
-            </>
+       <div>
+ <form onSubmit={handleClick}>
+<label>
+    Full name : 
+ <input 
+                        type="text" 
+                        name="fullName" 
+                        value={registerData.fullName} 
+                        onChange={handleChange} 
+                        placeholder="Enter your full name" 
+                    />
+                    </label>
+<label> Phone Number :
+                    <input 
+                    type="text" 
+                    name="phoneNumber" 
+                    value={registerData.phoneNumber} 
+                    onChange={handleChange} 
+                    placeholder="Enter your phone number" 
+                />
+                </label>
+
+                <label> Email :
+                <input 
+                type="text" 
+                name="email" 
+                value={registerData.email} 
+                onChange={handleChange} 
+                placeholder="Enter your email" 
+            />
+           </label> 
+
+           <label>
+            Password :
+            <input 
+            type="text" 
+            name="password" 
+            value={registerData.password} 
+            onChange={handleChange} 
+            placeholder="Enter your password" 
+        />
+</label>
+<button 
+    type="submit" 
+    style={{
+        backgroundColor: 'blue', 
+        color: 'white', 
+        padding: '10px 20px', 
+        border: 'none', 
+        borderRadius: '5px', 
+        cursor: 'pointer', 
+        fontSize: '16px', 
+        fontWeight: 'bold', 
+        transition: 'background-color 0.3s' 
+    }}
+    onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f57c00'} 
+    onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'blue'}  >
+    Add Passenger
+</button>
+ </form>
+       </div>
     )
 }
 
