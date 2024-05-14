@@ -19,6 +19,8 @@ import UserHomePage from './components/UserHomePage';
 import UserCreatePassenger from './components/UserCreatePassenger';
 import UserAddressPage from './components/UserAddressPage';
 import UserLuggage from './components/UserLuggage';
+import UserInfoPage from './components/UserInfoPage';
+import EditUserProfile from './components/UserEditInfoPage';
 
 function App() {
 
@@ -44,7 +46,7 @@ function App() {
             </>} />
 
             {/* User-side routes */}
-            <Route path="/homepage/*" element={<>
+            <Route path="/userside/*" element={<>
               <UserNavbar />
               <Routes>
               <Route path="flights/:flightId/passengers" element={<UserCreatePassenger />} />
@@ -52,6 +54,8 @@ function App() {
                 <Route path="login" element={<Login />} />
                 <Route index element={<UserHomePage />} />
                 <Route path="register" element={<Register />} />
+                <Route path="profile" element={<UserInfoPage />} />
+                <Route path="editprofile" element={<EditUserProfile />} />
                 <Route path="flights/:flightId/passengers/:passengerId/addresses" element={<UserAddressPage/>} />
               </Routes>
             </>} />
