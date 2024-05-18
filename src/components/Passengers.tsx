@@ -35,6 +35,8 @@ import { Link, useParams } from 'react-router-dom';
       .catch( (e:Error) => {
         console.log(e)
       })
+
+      
     }
 
     return( 

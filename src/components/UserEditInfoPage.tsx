@@ -1,35 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Box, Heading, FormControl, FormLabel, Input, Button, VStack, useColorModeValue } from '@chakra-ui/react';
-import User from './types/UserType';
+import AppService from './services/AppService';
+import UserUpdate from './types/UserUpdate';
 
 
 const EditUserProfile: React.FC = () => {
-  const [user, setUser] = useState<User>({ name: '', email: '', username: '', phonenumber: '' });
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      // Replace with actual API call
-      const userData = await fetch('/api/user').then(res => res.json());
-      setUser(userData);
-    };
-    fetchUserData();
-  }, []);
+  const [userUpdate, setUserUpdate] = useState<UserUpdate>({ fullName: '', phoneNumber: ''});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
+    setUserUpdate({ ...userUpdate, [name]: value });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    await fetch('/api/user', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(user),
-    });
-    
-    window.location.href = 'userside/profile'; //sıkıntılı çalışıyor anlamadım -ç
+    var updateUserInfo= {
+      fullName: userUpdate.fullName,
+      phoneNumber: userUpdate.phoneNumber
+    }
+    AppService.updateUserInfo(updateUserInfo).then((response:any ) => {
+    setUserUpdate(response.data)
+    alert("User updated successfully")
+    }).catch((e:Error) => { 
+      console.log(e)
+    })
   };
 
   const bg = useColorModeValue('orange.100', 'orange.700');
@@ -40,21 +34,13 @@ const EditUserProfile: React.FC = () => {
       <Heading as="h1" size="xl" mb={4}>Edit Profile</Heading>
       <form onSubmit={handleSubmit}>
         <VStack spacing={4}>
-          <FormControl id="name">
-            <FormLabel>Name</FormLabel>
-            <Input type="text" name="name" value={user.name} onChange={handleChange} />
-          </FormControl>
-          <FormControl id="email">
+          <FormControl id="fullName">
             <FormLabel>Email</FormLabel>
-            <Input type="email" name="email" value={user.email} onChange={handleChange} />
+            <Input type="text" name="fullName" value={userUpdate.fullName} onChange={handleChange} />
           </FormControl>
           <FormControl id="username">
             <FormLabel>Username</FormLabel>
-            <Input type="text" name="username" value={user.username} onChange={handleChange} />
-          </FormControl>
-          <FormControl id="phonenumber">
-            <FormLabel>Phone Number</FormLabel>
-            <Input type="text" name="phonenumber" value={user.phonenumber} onChange={handleChange} />
+            <Input type="text" name="phoneNumber" value={userUpdate.phoneNumber} onChange={handleChange} />
           </FormControl>
           <Button type="submit" colorScheme="orange">Save Changes</Button>
         </VStack>

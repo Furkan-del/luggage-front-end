@@ -13,7 +13,7 @@ import CreateAddressRequest from './types/CreateAddressRequest';
 
 
 const CreateAddress: React.FC = () => {
-  const {passengerId} = useParams()
+  const {passengerId,flightId} = useParams()
 
   const [address, setAddress] = useState<CreateAddressRequest>({
     addressName: '',
@@ -36,10 +36,20 @@ const CreateAddress: React.FC = () => {
 
 const handleCreateAddress= () => {
 
-
-    AppService.createAddress(address,passengerId).then((response) => {
-
+var createAddress = {
+  addressName: address.addressName,
+  street:   address.street,
+  avenue:   address.avenue,
+  apartmentName: address.apartmentName,
+  floor: address.floor,
+  doorNumber: address.doorNumber,
+  city: address.city,
+  country: address.country,
+  passenger:passengerId
+}
+    AppService.createAddress(createAddress,passengerId,flightId).then((response) => {
     setAddress({
+      ...address,
       addressName: response.data.addressName,
       street: response.data.street,
       avenue: response.data.avenue,
@@ -48,8 +58,9 @@ const handleCreateAddress= () => {
       doorNumber: response.data.doorNumber,
       city: response.data.city,
       country: response.data.country
-    })}
-    
+    })
+  alert("Address created successfully")
+  }
     ).catch(
       (error:Error) => console.log(error)
     );

@@ -1,16 +1,17 @@
-import { Stack,Heading, Button ,Select } from '@chakra-ui/react'
+import { Button  } from '@chakra-ui/react'
 import 'react-day-picker/dist/style.css';
-import CalendarComponent from './CalendarComponent';
 
 import { useState } from 'react';
 import CreateFlightRequest from './types/CreateFlightRequest';
 import AppService from './services/AppService';
+import { Calendar } from 'primereact/calendar';
+import { Nullable } from 'primereact/ts-helpers';
 
 
 
 const CreateFlight = () => {
-    const [firstDate, setFirstDate] = useState<Date>();
-    const [secondDate, setSecondDate] = useState<Date>();
+    const [firstDate, setFirstDate] = useState<Nullable<Date>>(null);
+    const [secondDate, setSecondDate] = useState<Nullable<Date>>(null);
 
     const initialCreateFlightRequest = {
         pnrCode: "",
@@ -82,8 +83,8 @@ const CreateFlight = () => {
     <input type="text" value={flight.arrivalLocation} onChange={(e) => setFlight({ ...flight, arrivalLocation: e.target.value })} placeholder='From' style={{ marginBottom: '10px' }} />
     <input type="text" value={flight.departureLocation} onChange={(e) => setFlight({ ...flight, departureLocation: e.target.value })} placeholder='To' style={{ marginBottom: '10px' }} />
     <input type="text" value={flight.passengerType} onChange={(e) => setFlight({ ...flight, passengerType: e.target.value })} placeholder='Passenger Type' style={{ marginBottom: '10px' }} />
-    <CalendarComponent date = {firstDate} setDate = {setFirstDate} label = "Departure Date Display" />
-    <CalendarComponent date = {secondDate} setDate = {setSecondDate} label = "Arrival Date Display"/>
+    <Calendar value={firstDate} onChange={(e) => setFirstDate(e.value)} dateFormat="dd/mm/yy" />
+    <Calendar value={secondDate} onChange={(e) => setSecondDate(e.value)} dateFormat="dd/mm/yy" />
     <input type="text" value={flight.pnrCode} onChange={(e) => setFlight({ ...flight, pnrCode: e.target.value })} placeholder='merhaba' style={{ marginBottom: '10px' }} />
     <button onClick={saveTutorial} style={{ backgroundColor: 'orange', color: 'white', padding: '10px', border: 'none', cursor: 'pointer', marginTop: '10px' }}>SEND</button>
 </div>

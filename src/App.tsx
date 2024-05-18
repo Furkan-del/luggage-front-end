@@ -54,8 +54,8 @@ function App() {
                 <Route path="login" element={<Login />} />
                 <Route index element={<UserHomePage />} />
                 <Route path="register" element={<Register />} />
-                <Route path="profile" element={<UserInfoPage />} />
-                <Route path="editprofile" element={<EditUserProfile />} />
+                <Route path="auth/my-profile" element={<UserInfoPage />} />
+                <Route path="auth/editprofile" element={<EditUserProfile />} />
                 <Route path="flights/:flightId/passengers/:passengerId/addresses" element={<UserAddressPage/>} />
               </Routes>
             </>} />

@@ -14,7 +14,6 @@ import FlightResponse from "./types/FlightResponse";
       const retrieveFlights = () => {
         AppService.getAllFlights()
           .then((response: any) => {
-    
             setFlights(response.data);
             console.log(response.data);
           })
@@ -22,6 +21,8 @@ import FlightResponse from "./types/FlightResponse";
           .catch((e: Error) => {
             console.log(e);
           });
+          
+
       };
 
     return (
@@ -50,7 +51,7 @@ import FlightResponse from "./types/FlightResponse";
                   <Td>{flight.arrivalLocation}</Td>
                   <Td>
 
-                    <Link style={{ color: 'blue' }} to={`/homepage/flights/${flight.id}/passengers`}>
+                    <Link style={{ color: 'blue' }} to={`/userside/flights/${flight.id}/passengers`}>
                       Choose 
                     </Link>
                   </Td>

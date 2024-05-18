@@ -10,34 +10,41 @@ import PassengerResponse from '../types/PassengerResponse';
 import RegisterRequest from '../types/RegisterRequest';
 
 const API_URL = 'http://localhost:8080'
-
+const TOKEN = localStorage.getItem('token')!!
 //burası clienttır client backende istek atar.client eğer pathi ve requesti düzgün atarsa backendden cevap alacak bu pathler sayesinde.
 const getAllFlights = () => {
-    return axios.get<FlightResponse []>(`${API_URL}/flights`, { headers: {
-        "Access-Control-Allow-Headers":"Content-type,Authorization",
+    const headers = {
         "Content-type": "application/json",
-        "Access-Control-Allow-Origin": "*"
-    }})
-}
+        "Access-Control-Allow-Origin": "*",
+        "Authorization": `Bearer ${TOKEN}`
+    };
+
+    console.log(headers);
+
+    return axios.get<FlightResponse []>(`${API_URL}/flights`, { headers });
+};
 
 const getFlightById = (flightId:any) => {
-    return axios.get<FlightResponse>(`${API_URL}/flights/${flightId}`,{ headers: {
-        "Access-Control-Allow-Headers":"Content-type,Authorization",
+    const headers = {
         "Content-type": "application/json",
-        "Access-Control-Allow-Origin": "*"
-    }}) 
+        "Access-Control-Allow-Origin": "*",
+        "Authorization": `Bearer ${TOKEN}`
+    };
+
+    return axios.get<FlightResponse>(`${API_URL}/flights/${flightId}`,{ headers}) 
 }
 
 const getAllPassengers = (flightId:any) => {
-    return axios.get<PassengerResponse []>(`${API_URL}/flights/${flightId}/passengers`,{ headers: {
-        "Access-Control-Allow-Headers":"Content-type,Authorization",
+    const headers = {
         "Content-type": "application/json",
-        "Access-Control-Allow-Origin": "*"
-    }}) 
+        "Access-Control-Allow-Origin": "*",
+        "Authorization": `Bearer ${TOKEN}`
+    };
+    return axios.get<PassengerResponse []>(`${API_URL}/flights/${flightId}/passengers`,{headers}) 
 }
 
 const getPassengerById = (flightId:any,passengerId:any) => {
-    return  axios.get<PassengerResponse []>(`/flights/${flightId}/passengers/${passengerId}`,{ headers: {
+    return  axios.get<PassengerResponse []>(`${API_URL}/flights/${flightId}/passengers/${passengerId}`,{ headers: {
         "Access-Control-Allow-Headers":"Content-type,Authorization",
         "Content-type": "application/json",
         "Access-Control-Allow-Origin": "*"
@@ -46,7 +53,7 @@ const getPassengerById = (flightId:any,passengerId:any) => {
    
 
 const getAllLuggagesByPassengerAndFlight = (flightId:any,passengerId:any) =>{
-    return axios.get<LuggageResponse []>(`/flights/${flightId}/passengers/${passengerId}/luggages`)
+    return axios.get<LuggageResponse []>(`${API_URL}/flights/${flightId}/passengers/${passengerId}/luggages`)
 }
 
 const createFlight = (request:CreateFlightRequest) => {
@@ -58,11 +65,16 @@ const updateLuggage = (flightId:any,passengerId:any,luggageId:any, state : any )
 }
 
 const findByPnrCode = (pnrCode:string) => {
-    return axios.get<any>(`/flights/pnr-code?pnrCode=${pnrCode}`)
+    return axios.get<any>(`${API_URL}/flights/pnr-code?pnrCode=${pnrCode}`)
 }
 
 const addPassenger = (createPassengerRequest:CreatePassengerRequest,flightId:any) => {
-    return axios.post<AddPassengerResponse>(`/flights/${flightId}/passengers`,createPassengerRequest)
+    const headers = {
+        "Content-type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Authorization": `Bearer ${TOKEN}`
+    };
+    return axios.post<any>(`${API_URL}/flights/${flightId}/passengers`,createPassengerRequest,{headers})
 }
 
 const registerUser = (request:RegisterRequest) => {
@@ -82,8 +94,8 @@ const logInUser = (request:LoginRequest) => {
     }})
 }
 
-const createAddress = (request:CreateAddressRequest,passengerId:any) => {
-    return axios.post<any>(`/passengers/${passengerId}/addresses`,request)
+const createAddress = (request:CreateAddressRequest,passengerId:any,flightId:any) => {
+    return axios.post<any>(`${API_URL}/flights/${flightId}/passengers/${passengerId}/addresses`,request)
 }
 
 
@@ -91,6 +103,34 @@ const getAddresses = (passengerId:any,addressId:any) => {
     return axios.get<any>(`/passengers/${passengerId}/addresses/${addressId}`)
 }
 
+const getUserInfo = (userId:any) => {
+    const headers = {
+        "Content-type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Authorization": `Bearer ${TOKEN}`
+    };
+
+return axios.get<any>(`${API_URL}/auth/${userId}`,{ headers })
+}
+
+const updateUserInfo = (updateUserRequest:any) => {
+
+    const headers = {
+        "Content-type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Authorization": `Bearer ${TOKEN}`
+    };
+    return axios.put<any>(`${API_URL}/auth/change-profile`,updateUserRequest,{ headers })
+}
+
+const getUser = () => {
+    const headers = {
+        "Content-type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Authorization": `Bearer ${TOKEN}`
+    };
+return axios.get<any>(`${API_URL}/auth/my-profile`,{ headers })
+}
 export default {getAllFlights,getAllPassengers,getFlightById,
     getAllLuggagesByPassengerAndFlight,createFlight,updateLuggage,
     findByPnrCode,
@@ -99,5 +139,8 @@ export default {getAllFlights,getAllPassengers,getFlightById,
     logInUser,
     createAddress,
     getAddresses,
-    getPassengerById
+    getPassengerById,
+    getUserInfo,
+    updateUserInfo,
+    getUser
 }

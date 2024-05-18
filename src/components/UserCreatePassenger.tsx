@@ -16,19 +16,19 @@ const UserCreatePassenger: React.FC = () => {
     
     const {flightId} = useParams()
     
-    const [passengerInfos,setPassengerInfos] = useState<PassengerResponse > ();
+    const [passengers,setPassengers] = useState<PassengerResponse []> ();
   
     // uygulamanın renderlanmadan önce bu queryi çalıştırır lakin burada şu önemli eğer bir değer paslanıyorsa içine.
     // o değer değiştiğinde çalışır aynıysa bidaha query atmaz.
       useEffect(() => {
         if(flightId)
-        retrievePassengerById(flightId,passengerInfos?.id);
+        retrieveAllPassengers(flightId);
       },[flightId])
   
-      const retrievePassengerById = (flightId:any,passengerId:any) => {
-        AppService.getPassengerById(flightId,passengerId)
+      const retrieveAllPassengers = (flightId:any) => {
+        AppService.getAllPassengers(flightId)
         .then((response:any) => {
-            setPassengerInfos(response.data)
+          setPassengers(response.data)
           console.log(response.data)
         })
         .catch( (e:Error) => {
@@ -40,7 +40,8 @@ const UserCreatePassenger: React.FC = () => {
     const [passenger, setPassenger] = useState<Passenger>({
         name: '',
         email: '',
-        phoneNumber: ''
+        phoneNumber: '',
+        id: ''
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,16 +58,14 @@ const UserCreatePassenger: React.FC = () => {
         e.preventDefault();
 
         var createPassenger = {
-            id: null,
             name: passenger.name,
             email: passenger.email,
             phoneNumber: passenger.phoneNumber,
-            flight:null
+            flight:flightId
     }
        
         AppService.addPassenger(createPassenger, flightId)
             .then((response: any) => {
-
                 setPassenger({
                     ...passenger,
                     id: response.id,
@@ -141,16 +140,22 @@ const UserCreatePassenger: React.FC = () => {
             </Tr>
           </Thead>
           <Tbody>
-                <Tr key={passengerInfos?.id}>
-                  <Td>{passengerInfos?.passengerName}</Td>
-                  <Td>{passengerInfos?.email}</Td>
-                  <Td>{passengerInfos?.phoneNumber}</Td>
+            {passengers?.map((passengerInfo:PassengerResponse) => (
+            
+          <Tr key={passengerInfo.id}>
+                  <Td>{passengerInfo.passengerName}</Td>
+                  <Td>{passengerInfo.email}</Td>
+                  <Td>{passengerInfo.phoneNumber}</Td>
                   <Td>
-                    <Link to={`/homepage/flights/${flightId}/passengers/${passengerInfos?.id}/addresses`}>
+                    <Link to={`/userside/flights/${flightId}/passengers/${passengerInfo.id}/addresses`}>
                     Add Addresses
                     </Link>
                   </Td>
                 </Tr>
+            )
+            
+            )}
+                
           </Tbody>
         </Table>
       </TableContainer>

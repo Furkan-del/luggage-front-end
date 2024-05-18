@@ -7,10 +7,10 @@ import RegisterRequest from './types/RegisterRequest'
 const Register = () => {
    
 const [registerData,setRegisterData] = useState<RegisterRequest>({
-    fullName:"dsa",
-    email:"a",
-    password:"dsf",
-    phoneNumber:"dfsf"
+    fullName:"",
+    email:"",
+    password:"",
+    phoneNumber:""
 })
 
 const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,9 +26,9 @@ const handleClick = (e: React.FormEvent) =>{
     e.preventDefault()
     var createRegister = {
         fullName: registerData.fullName,
-        password: registerData.email,
+        password: registerData.password,
         phoneNumber: registerData.phoneNumber,
-        email:registerData.password
+        email:registerData.email
 }
 
     AppService.registerUser(createRegister)
@@ -105,7 +105,7 @@ const handleClick = (e: React.FormEvent) =>{
     }}
     onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f57c00'} 
     onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'blue'}  >
-    Add Passenger
+    Register
 </button>
  </form>
        </div>

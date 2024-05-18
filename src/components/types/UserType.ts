@@ -1,6 +1,7 @@
 export default interface UserType {
-  name: string;
-  email: string;
+  fullName: string;
+  mail: string;
   username: string;
-  phonenumber: string;
+  phoneNumber: string;
 }
+
