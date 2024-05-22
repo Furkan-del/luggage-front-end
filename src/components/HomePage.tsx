@@ -13,7 +13,7 @@ const HomePage = () => {
       <Heading as="h1" size="xl" mb={8} textAlign="center">Welcome to the Luggage Management System</Heading>
       <SimpleGrid columns={[1, null, 2]} spacing={10}>
         <Box borderWidth="1px" borderRadius="lg" overflow="hidden">
-          <Image src={createFlightImage} alt="Create Flight" />
+          <Image style={{filter: "hue-rotate(170deg)"}} src={createFlightImage} alt="Create Flight" />
           <Box p={6}>
             <Stack spacing={3}>
               <Heading as="h2" size="md">Create Flight</Heading>
@@ -25,7 +25,7 @@ const HomePage = () => {
           </Box>
         </Box>
         <Box borderWidth="1px" borderRadius="lg" overflow="hidden">
-          <Image src={luggagesImage} alt="Luggages" />
+          <Image style={{filter: "hue-rotate(170deg)"}} src={luggagesImage} alt="Luggages" />
           <Box p={6}>
             <Stack spacing={3}>
               <Heading as="h2" size="md">Luggages</Heading>
@@ -37,7 +37,7 @@ const HomePage = () => {
           </Box>
         </Box>
         <Box borderWidth="1px" borderRadius="lg" overflow="hidden">
-          <Image src={flightsImage} alt="Flights" />
+          <Image style={{filter: "hue-rotate(170deg)"}} src={flightsImage} alt="Flights" />
           <Box p={6}>
             <Stack spacing={3}>
               <Heading as="h2" size="md">Flights</Heading>
@@ -49,7 +49,7 @@ const HomePage = () => {
           </Box>
         </Box>
         <Box borderWidth="1px" borderRadius="lg" overflow="hidden">
-          <Image src={passengersImage} alt="Passengers" />
+          <Image style={{filter: "hue-rotate(170deg)"}} src={passengersImage} alt="Passengers" />
           <Box p={6}>
             <Stack spacing={3}>
               <Heading as="h2" size="md">Passengers</Heading>

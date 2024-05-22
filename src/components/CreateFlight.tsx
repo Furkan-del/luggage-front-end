@@ -6,7 +6,7 @@ import { Calendar } from 'primereact/calendar';
 import { Nullable } from 'primereact/ts-helpers';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
-import './CreateFlight.css'; // Import custom CSS
+import './CreateFlight.css'; 
 
 const CreateFlight = () => {
   const [firstDate, setFirstDate] = useState<Nullable<Date>>(null);

@@ -39,11 +39,11 @@ const Login = () => {
         left="0"
         width="100%"
         height="100%"
-        backgroundImage={`url(${airportImage})`} 
+        backgroundImage={`url(${airportImage })`} 
         backgroundSize="cover" 
         backgroundPosition="center" 
         backgroundRepeat="no-repeat" 
-        filter="brightness(0.7) grayscale(0.5)" // Parlaklığı  ve görünülük buradan ayarlanacak
+        filter="brightness(0.7) grayscale(0.5) " // Parlaklığı  ve görünülük buradan ayarlanacak
         opacity="0.8" // görünürütlk ayarı
         zIndex="0"
       />
@@ -62,6 +62,8 @@ const Login = () => {
           boxShadow="0px 0px 10px rgba(0, 0, 0, 0.1)"
           width="400px"
           textAlign="center"
+          backdropFilter='auto'
+          backdropBlur='4px'
         >
           <Heading color="orange" marginBottom="20px">Login</Heading>
           <Stack spacing={3}>

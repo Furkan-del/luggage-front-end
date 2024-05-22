@@ -83,6 +83,8 @@ const Register = () => {
           boxShadow="0px 0px 10px rgba(0, 0, 0, 0.1)"
           width="400px"
           textAlign="center"
+          backdropFilter='auto'
+          backdropBlur='4px'
         >
           <Heading color="orange" marginBottom="20px">Register</Heading>
           <form onSubmit={handleClick}>
