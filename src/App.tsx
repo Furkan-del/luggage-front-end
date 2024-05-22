@@ -1,4 +1,3 @@
-
 import { ChakraProvider } from '@chakra-ui/react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { PrimeReactProvider } from 'primereact/api';
@@ -6,9 +5,7 @@ import { PrimeReactProvider } from 'primereact/api';
 // Import backoffice components
 import Navbar from './components/Navbar';
 import CreateFlight from './components/CreateFlight';
-import Login from './components/Login';
 import HomePage from './components/HomePage';
-import Register from './components/Register';
 import Luggages from './components/Luggages';
 import Flights from './components/Flights';
 import Passenger from './components/Passengers';
@@ -22,6 +19,10 @@ import UserLuggage from './components/UserLuggage';
 import UserInfoPage from './components/UserInfoPage';
 import EditUserProfile from './components/UserEditInfoPage';
 
+// Import auth components
+import Login from './components/Login';
+import Register from './components/Register';
+
 function App() {
 
   return (
@@ -29,12 +30,14 @@ function App() {
       <ChakraProvider>
         <Router>
           <Routes>
+            {/* Auth routes */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+
             {/* Backoffice routes */}
             <Route path="/backoffice/*" element={<>
               <Navbar />
               <Routes>
-                <Route path="register" element={<Register />} />
-                <Route path="login" element={<Login />} />
                 <Route path="createFlight" element={<CreateFlight />} />
                 <Route path="luggages" element={<Luggages />} />
                 <Route path="flights" element={<Flights />} />
@@ -49,14 +52,12 @@ function App() {
             <Route path="/userside/*" element={<>
               <UserNavbar />
               <Routes>
-              <Route path="flights/:flightId/passengers" element={<UserCreatePassenger />} />
+                <Route path="flights/:flightId/passengers" element={<UserCreatePassenger />} />
                 <Route path="luggage" element={<UserLuggage />} />
-                <Route path="login" element={<Login />} />
                 <Route index element={<UserHomePage />} />
-                <Route path="register" element={<Register />} />
                 <Route path="auth/my-profile" element={<UserInfoPage />} />
                 <Route path="auth/editprofile" element={<EditUserProfile />} />
-                <Route path="flights/:flightId/passengers/:passengerId/addresses" element={<UserAddressPage/>} />
+                <Route path="flights/:flightId/passengers/:passengerId/addresses" element={<UserAddressPage />} />
               </Routes>
             </>} />
           </Routes>
