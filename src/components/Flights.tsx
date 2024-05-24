@@ -13,7 +13,7 @@ import {
 import { useEffect, useState } from 'react';
 import FlightResponse from './types/FlightResponse';
 import AppService from './services/AppService';
-import { Link, useParams } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 
 const Flights = () => {
   const [flights, setFlights] = useState<FlightResponse[]>([]);
@@ -26,7 +26,6 @@ const Flights = () => {
   const retrieveFlights = () => {
     AppService.getAllFlights()
       .then((response: any) => {
-
         setFlights(response.data);
         console.log(response.data);
       })

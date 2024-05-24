@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import  LoginRequest  from '../types/LoginRequest';
 import  LoginResponse  from '../types/LoginResponse'; 
 import axios from 'axios';
@@ -20,6 +21,15 @@ const login = async (username: string, password: string): Promise<LoginResponse>
 };
 
 const logout = (): void => {
+  const navigate = useNavigate();
+  try {
+    axios.get(API_URL+'logout', { withCredentials: true });
+    alert('Logout successful');
+    navigate('/login');
+  } catch (error) {
+    console.error('There was an error logging out!', error);
+  }
+
   localStorage.removeItem('token');
 };
 

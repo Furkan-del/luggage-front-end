@@ -20,7 +20,7 @@ const Login = () => {
       .then(
         (response: any) => {
           setLoginRequest(response);
-          navigate(`/userside/auth/${response.userId}`);
+          navigate(`/userside/auth/${response.userId}/flights`);
         }
       )
       .catch((e: Error) => console.log(e));

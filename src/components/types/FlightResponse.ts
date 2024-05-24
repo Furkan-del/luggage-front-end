@@ -9,7 +9,6 @@ export default interface FlightResponse{
     departureLocation:string,
     arrivalLocation:string,
     returnDate:string,
-    passengerType:string,
     passengers:PassengerDto [] | null ,
     luggages:LuggageDto [] | null
 }

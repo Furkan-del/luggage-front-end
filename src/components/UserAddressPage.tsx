@@ -8,11 +8,12 @@ import {
   VStack
 } from '@chakra-ui/react';
 import AppService from './services/AppService';
-import { useParams } from 'react-router-dom';
+import { useParams ,useNavigate} from 'react-router-dom';
 import CreateAddressRequest from './types/CreateAddressRequest';
 
 
 const CreateAddress: React.FC = () => {
+  const navigate = useNavigate();
   const {passengerId,flightId} = useParams()
 
   const [address, setAddress] = useState<CreateAddressRequest>({
@@ -34,8 +35,8 @@ const CreateAddress: React.FC = () => {
     }));
   };
 
-const handleCreateAddress= () => {
-
+const handleCreateAddress= (event: React.FormEvent) => {
+  event.preventDefault();
 var createAddress = {
   addressName: address.addressName,
   street:   address.street,
@@ -47,7 +48,8 @@ var createAddress = {
   country: address.country,
   passenger:passengerId
 }
-    AppService.createAddress(createAddress,passengerId,flightId).then((response) => {
+    AppService.createAddress(createAddress,passengerId,flightId)
+    .then((response:any) => {
     setAddress({
       ...address,
       addressName: response.data.addressName,
@@ -60,6 +62,7 @@ var createAddress = {
       country: response.data.country
     })
   alert("Address created successfully")
+  navigate(`/userside/auth/flights/${flightId}/passengers/${passengerId}/luggages`)
   }
     ).catch(
       (error:Error) => console.log(error)

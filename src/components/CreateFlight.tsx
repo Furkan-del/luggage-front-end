@@ -32,7 +32,6 @@ const CreateFlight = () => {
       pnrCode: flight.pnrCode,
       departureLocation: flight.departureLocation,
       arrivalLocation: flight.arrivalLocation,
-      passengerType: flight.passengerType,
       departureDate: firstDate,
       returnDate: secondDate,
       passengers: [],
@@ -51,7 +50,6 @@ const CreateFlight = () => {
           pnrCode: response.pnrCode,
           departureLocation: response.departureLocation,
           arrivalLocation: response.arrivalLocation,
-          passengerType: response.passengerType,
           departureDate: response.departureDate,
           returnDate: response.returnDate,
           passengers: [],
@@ -100,12 +98,6 @@ const CreateFlight = () => {
               value={flight.departureLocation}
               onChange={(e) => setFlight({ ...flight, departureLocation: e.target.value })}
               placeholder='To'
-            />
-            <Input
-              type="text"
-              value={flight.passengerType}
-              onChange={(e) => setFlight({ ...flight, passengerType: e.target.value })}
-              placeholder='Passenger Type'
             />
             <Calendar
               value={firstDate}

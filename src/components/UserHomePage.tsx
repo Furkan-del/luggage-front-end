@@ -1,8 +1,9 @@
-import { Heading, Input, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import { Heading, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import {Link} from "react-router-dom"
 import AppService from "./services/AppService";
 import FlightResponse from "./types/FlightResponse";
+import AuthService from "./services/AuthService";
 
  const UserHomePage = () => {
     const [flights, setFlights] = useState<FlightResponse[]>([]);
@@ -11,6 +12,7 @@ import FlightResponse from "./types/FlightResponse";
         retrieveFlights();
       }, []);
     
+
       const retrieveFlights = () => {
         AppService.getAllFlights()
           .then((response: any) => {

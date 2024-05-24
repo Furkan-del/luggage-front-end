@@ -5,5 +5,6 @@ export default interface CreatePassengerRequest {
     name: string;
     email: string;
     phoneNumber: string,
-    flight?:any
+    flight?:any,
+    passengerType:string
  }

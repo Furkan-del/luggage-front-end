@@ -32,14 +32,13 @@ function App() {
           <Routes>
             {/* Auth routes */}
             <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            <Route  path="/register" element={<Register />} />
 
             {/* Backoffice routes */}
             <Route path="/backoffice/*" element={<>
               <Navbar />
               <Routes>
                 <Route path="createFlight" element={<CreateFlight />} />
-                <Route path="luggages" element={<Luggages />} />
                 <Route path="flights" element={<Flights />} />
                 <Route path="passengers" element={<Passenger />} />
                 <Route path="flights/:flightId/passengers" element={<Passenger />} />
@@ -53,13 +52,17 @@ function App() {
               <UserNavbar />
               <Routes>
                 <Route path="flights/:flightId/passengers" element={<UserCreatePassenger />} />
-                <Route path="luggage" element={<UserLuggage />} />
-                <Route index element={<UserHomePage />} />
+                <Route path="auth/flights/:flightId/passengers/:passengerId/luggages" element={<UserLuggage />} />
+                <Route path='/auth/:userId/flights' element={<UserHomePage />} />
                 <Route path="auth/my-profile" element={<UserInfoPage />} />
                 <Route path="auth/editprofile" element={<EditUserProfile />} />
                 <Route path="flights/:flightId/passengers/:passengerId/addresses" element={<UserAddressPage />} />
               </Routes>
-            </>} />
+            </>}
+            
+            />
+
+<Route index element={<Login />} />
           </Routes>
         </Router>
       </ChakraProvider>

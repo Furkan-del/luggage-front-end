@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import {
   Button,
   FormControl,
@@ -9,6 +9,9 @@ import {
   Box,
   VStack
 } from '@chakra-ui/react';
+import AppService from './services/AppService';
+import { useParams } from 'react-router-dom';
+import CreateLuggageRequest from './types/CreateLuggageRequest';
 
 interface Luggage {
   weight: number;
@@ -16,7 +19,10 @@ interface Luggage {
 }
 
 const CreateLuggage: React.FC = () => {
-  const [luggage, setLuggage] = useState<Luggage>({ weight: 0, name: '' });
+
+  const {flightId,passengerId} = useParams()
+
+  const [luggage, setLuggage] = useState<CreateLuggageRequest>({ weight: 0, name: '' });
   const [luggageList, setLuggageList] = useState<Luggage[]>([]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,8 +35,16 @@ const CreateLuggage: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLuggageList(prevList => [...prevList, luggage]);
-    setLuggage({ weight: 0, name: '' }); 
+    AppService.createLuggage(flightId,passengerId,luggage)
+    .then((response:any) => {
+      setLuggageList([...luggageList, response.data])
+      setLuggage({ weight: luggage.weight, name: luggage.name });
+      alert("Luggage added successfully")
+    }
+    ).catch((e:Error) => {  
+      alert("Luggage could not be added")
+    console.log(e)
+    })
   };
 
   return (

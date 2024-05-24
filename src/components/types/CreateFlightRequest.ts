@@ -8,7 +8,6 @@ export default interface CreateFlightRequest{
     departureLocation:string,
     arrivalLocation:string,
     returnDate: Date,
-    passengerType:string,
     passengers:PassengerDto [] | null,
     luggages:LuggageDto [] | null
  }

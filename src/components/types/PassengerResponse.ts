@@ -7,6 +7,7 @@ export default interface PassengerResponse{
     email:string,
     phoneNumber:string,
     luggages:LuggageDto[],
+    passengerType:string,
     isCheckedIn:boolean,
     flight:FlightDto[]
 }
