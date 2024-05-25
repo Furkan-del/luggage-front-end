@@ -1,13 +1,15 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import {
+  Box,
   Button,
   FormControl,
   FormLabel,
   Input,
   NumberInput,
   NumberInputField,
-  Box,
-  VStack
+  VStack,
+  Heading,
+  useToast
 } from '@chakra-ui/react';
 import AppService from './services/AppService';
 import { useParams } from 'react-router-dom';
@@ -19,15 +21,15 @@ interface Luggage {
 }
 
 const CreateLuggage: React.FC = () => {
-
-  const {flightId,passengerId} = useParams()
+  const { flightId, passengerId } = useParams();
+  const toast = useToast();
 
   const [luggage, setLuggage] = useState<CreateLuggageRequest>({ weight: 0, name: '' });
   const [luggageList, setLuggageList] = useState<Luggage[]>([]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setLuggage(prevLuggage => ({
+    setLuggage((prevLuggage) => ({
       ...prevLuggage,
       [name]: name === 'weight' ? parseInt(value) || 0 : value
     }));
@@ -35,20 +37,35 @@ const CreateLuggage: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    AppService.createLuggage(flightId,passengerId,luggage)
-    .then((response:any) => {
-      setLuggageList([...luggageList, response.data])
-      setLuggage({ weight: luggage.weight, name: luggage.name });
-      alert("Luggage added successfully")
-    }
-    ).catch((e:Error) => {  
-      alert("Luggage could not be added")
-    console.log(e)
-    })
+    AppService.createLuggage(flightId, passengerId, luggage)
+      .then((response: any) => {
+        setLuggageList([...luggageList, response.data]);
+        setLuggage({ weight: 0, name: '' });
+        toast({
+          title: "Luggage added.",
+          description: "The luggage has been added successfully.",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+      })
+      .catch((e: Error) => {
+        toast({
+          title: "An error occurred.",
+          description: "Unable to add the luggage.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+        console.log(e);
+      });
   };
 
   return (
-    <Box p={5} shadow="md" borderWidth="1px">
+    <Box p={5} shadow="md" borderWidth="1px" maxW="600px" mx="auto">
+      <Heading as="h1" size="xl" mb={8} textAlign="center">
+        Add Luggage
+      </Heading>
       <form onSubmit={handleSubmit}>
         <VStack spacing={4}>
           <FormControl isRequired>

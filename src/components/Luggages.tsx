@@ -60,8 +60,9 @@ import UpdateLuggageRequest from './types/UpdateLuggage';
 
     return( 
     <TableContainer>
+     <Heading as="h1" size="lg">Luggages</Heading>
   <Table variant='simple'>
-  <Heading as="h1" size="lg">Luggages</Heading>
+  
     <Thead>
       <Tr>
         <Th>Luggage ID</Th>
