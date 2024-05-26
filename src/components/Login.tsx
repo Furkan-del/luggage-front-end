@@ -21,6 +21,7 @@ const Login = () => {
         (response: any) => {
           setLoginRequest(response);
           navigate(`/userside/auth/${response.userId}/flights`);
+          localStorage.setItem("userId", response.userId)
         }
       )
       .catch((e: Error) => console.log(e));

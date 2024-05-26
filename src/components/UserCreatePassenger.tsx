@@ -31,14 +31,11 @@ interface Passenger {
 const UserCreatePassenger: React.FC = () => {
   const toast = useToast();
   const { flightId } = useParams();
+  const userId = localStorage.getItem('userId');
   const [passengers, setPassengers] = useState<PassengerResponse[]>([]);
 
-  useEffect(() => {
-    if (flightId) retrieveAllPassengers(flightId);
-  }, [flightId]);
-
-  const retrieveAllPassengers = (flightId: any) => {
-    AppService.getAllPassengers(flightId)
+  const retrievePassengersByIdAndFlightIdAndUserId = (flightId: any,passengerId: any,userId: any) => {
+    AppService.getPassengerByPassengerIdAndFlightIdAndUserId(flightId,passengerId,userId)
       .then((response: any) => {
         setPassengers(response.data);
         console.log(response.data);
@@ -73,7 +70,7 @@ const UserCreatePassenger: React.FC = () => {
       flight: flightId,
       passengerType: passenger.passengerType
     };
-
+      let passengerId ;
     AppService.addPassenger(createPassenger, flightId)
       .then((response: any) => {
         setPassenger({
@@ -90,7 +87,9 @@ const UserCreatePassenger: React.FC = () => {
           duration: 5000,
           isClosable: true,
         });
-        retrieveAllPassengers(flightId);
+      
+        retrievePassengersByIdAndFlightIdAndUserId(flightId,response.data.id,userId)
+
       })
       .catch((e: Error) => {
         toast({
@@ -102,10 +101,10 @@ const UserCreatePassenger: React.FC = () => {
         });
       });
   };
-
+  
   const handleCheckIn = (passengerId: any) => {
     AppService.checkInPassenger(flightId, passengerId)
-      .then(() => {
+      .then((response:any) => {
         toast({
           title: "Checked in.",
           description: "The passenger has been checked in successfully.",
@@ -113,7 +112,6 @@ const UserCreatePassenger: React.FC = () => {
           duration: 5000,
           isClosable: true,
         });
-        retrieveAllPassengers(flightId); 
       })
       .catch((e: Error) => {
         toast({

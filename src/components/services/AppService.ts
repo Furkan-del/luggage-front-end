@@ -39,7 +39,7 @@ const getFlightById = (flightId:any) => {
       "Access-Control-Allow-Origin": "*",
       "Authorization": `Bearer ${TOKEN}`
     };
-    return axios.put<any>(`${API_URL}/flights/${flightId}/passengers/${passengerId}/check-in`,  { headers });
+    return axios.put<any>(`${API_URL}/flights/${flightId}/passengers/${passengerId}/check-in`, {}, { headers });
   };
 
 const getAllPassengers = (flightId:any) => {
@@ -113,6 +113,18 @@ const registerUser = (request:RegisterRequest) => {
         "Content-type": "application/json",
         "Access-Control-Allow-Origin": "*"
     }})
+
+}
+
+const getPassengerByPassengerIdAndFlightIdAndUserId = (flightId:any,passengerId:any,userId:any) => {
+
+    const headers = {
+        "Content-type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Authorization": `Bearer ${TOKEN}`
+    };
+
+    return axios.get<any>(`${API_URL}/flights/${flightId}/passengers/all-passengers/${passengerId}?userId=${userId}`,{ headers })
 
 }
 
@@ -195,5 +207,6 @@ export default {getAllFlights,getAllPassengers,getFlightById,
     updateUserInfo,
     getUser,
     createLuggage,
-    checkInPassenger
+    checkInPassenger,
+    getPassengerByPassengerIdAndFlightIdAndUserId
 }
