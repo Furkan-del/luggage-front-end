@@ -25,7 +25,7 @@ interface Passenger {
   email: string;
   phoneNumber: string;
   id?: any;
-  passengerType:string
+  passengerType: string;
 }
 
 const UserCreatePassenger: React.FC = () => {
@@ -53,7 +53,7 @@ const UserCreatePassenger: React.FC = () => {
     email: '',
     phoneNumber: '',
     id: '',
-    passengerType:''
+    passengerType: ''
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,17 +71,17 @@ const UserCreatePassenger: React.FC = () => {
       email: passenger.email,
       phoneNumber: passenger.phoneNumber,
       flight: flightId,
-      passengerType:passenger.passengerType
+      passengerType: passenger.passengerType
     };
 
     AppService.addPassenger(createPassenger, flightId)
       .then((response: any) => {
         setPassenger({
-          name: response.data.passengerName,
-          email: response.data.email,
-          phoneNumber: response.data.phoneNumber,
-          id: response.data.id,
-          passengerType:response.data.passengerType
+          name: '',
+          email: '',
+          phoneNumber: '',
+          id: '',
+          passengerType: ''
         });
         toast({
           title: "Passenger created.",
@@ -90,10 +90,40 @@ const UserCreatePassenger: React.FC = () => {
           duration: 5000,
           isClosable: true,
         });
-
         retrieveAllPassengers(flightId);
       })
-      .catch((e: Error) => e.stack);
+      .catch((e: Error) => {
+        toast({
+          title: "An error occurred.",
+          description: "Unable to create the passenger.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      });
+  };
+
+  const handleCheckIn = (passengerId: any) => {
+    AppService.checkInPassenger(flightId, passengerId)
+      .then(() => {
+        toast({
+          title: "Checked in.",
+          description: "The passenger has been checked in successfully.",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+        retrieveAllPassengers(flightId); 
+      })
+      .catch((e: Error) => {
+        toast({
+          title: "An error occurred.",
+          description: "Unable to check in the passenger.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      });
   };
 
   return (
@@ -163,6 +193,7 @@ const UserCreatePassenger: React.FC = () => {
               <Th color="white">Passenger Phone Number</Th>
               <Th color="white">Passenger Type</Th>
               <Th color="white">Give Address</Th>
+              <Th color="white">Check In</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -181,6 +212,21 @@ const UserCreatePassenger: React.FC = () => {
                   >
                     Add Addresses
                   </Button>
+                </Td>
+                <Td>
+                  {passengerInfo.isCheckedIn ? (
+                    <Button colorScheme="green" size="sm" disabled>
+                      Checked In
+                    </Button>
+                  ) : (
+                    <Button
+                      colorScheme="green"
+                      size="sm"
+                      onClick={() => handleCheckIn(passengerInfo.id)}
+                    >
+                      Check In
+                    </Button>
+                  )}
                 </Td>
               </Tr>
             ))}

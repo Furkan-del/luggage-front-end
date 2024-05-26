@@ -33,6 +33,14 @@ const getFlightById = (flightId:any) => {
 
     return axios.get<FlightResponse>(`${API_URL}/flights/${flightId}`,{ headers}) 
 }
+ const checkInPassenger = (flightId: any, passengerId: any) => {
+    const headers = {
+      "Content-type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Authorization": `Bearer ${TOKEN}`
+    };
+    return axios.put<any>(`${API_URL}/flights/${flightId}/passengers/${passengerId}/check-in`,  { headers });
+  };
 
 const getAllPassengers = (flightId:any) => {
     const headers = {
@@ -186,5 +194,6 @@ export default {getAllFlights,getAllPassengers,getFlightById,
     getUserInfo,
     updateUserInfo,
     getUser,
-    createLuggage
+    createLuggage,
+    checkInPassenger
 }
