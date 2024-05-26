@@ -22,6 +22,7 @@ import EditUserProfile from './components/UserEditInfoPage';
 // Import auth components
 import Login from './components/Login';
 import Register from './components/Register';
+import BackofficeLogin from './components/BackofficeLogin';
 
 function App() {
 
@@ -33,6 +34,8 @@ function App() {
             {/* Auth routes */}
             <Route path="/login" element={<Login />} />
             <Route  path="/register" element={<Register />} />
+            <Route  path="/backofficelogin" element={<BackofficeLogin />} />
+            
 
             {/* Backoffice routes */}
             <Route path="/backoffice/*" element={<>
