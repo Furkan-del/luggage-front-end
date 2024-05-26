@@ -16,6 +16,7 @@ import {
   Thead,
   Tr,
   useColorModeValue,
+  useToast,
 } from '@chakra-ui/react';
 import PassengerResponse from './types/PassengerResponse';
 
@@ -24,9 +25,11 @@ interface Passenger {
   email: string;
   phoneNumber: string;
   id?: any;
+  passengerType:string
 }
 
 const UserCreatePassenger: React.FC = () => {
+  const toast = useToast();
   const { flightId } = useParams();
   const [passengers, setPassengers] = useState<PassengerResponse[]>([]);
 
@@ -49,7 +52,8 @@ const UserCreatePassenger: React.FC = () => {
     name: '',
     email: '',
     phoneNumber: '',
-    id: ''
+    id: '',
+    passengerType:''
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,17 +70,27 @@ const UserCreatePassenger: React.FC = () => {
       name: passenger.name,
       email: passenger.email,
       phoneNumber: passenger.phoneNumber,
-      flight: flightId
+      flight: flightId,
+      passengerType:passenger.passengerType
     };
 
     AppService.addPassenger(createPassenger, flightId)
       .then((response: any) => {
         setPassenger({
-          name: '',
-          email: '',
-          phoneNumber: '',
-          id: ''
+          name: response.data.passengerName,
+          email: response.data.email,
+          phoneNumber: response.data.phoneNumber,
+          id: response.data.id,
+          passengerType:response.data.passengerType
         });
+        toast({
+          title: "Passenger created.",
+          description: "The passenger has been created successfully.",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+
         retrieveAllPassengers(flightId);
       })
       .catch((e: Error) => e.stack);
@@ -118,6 +132,18 @@ const UserCreatePassenger: React.FC = () => {
             placeholder="Enter your phone number"
           />
         </FormControl>
+
+        <FormControl mb={4}>
+          <FormLabel>Passenger Type</FormLabel>
+          <Input
+            type="text"
+            name="passengerType"
+            value={passenger.passengerType}
+            onChange={handleChange}
+            placeholder="Enter your passenger type ADULT/CHILD"
+          />
+        </FormControl>
+
         <Button
           type="submit"
           colorScheme="orange"
@@ -135,6 +161,7 @@ const UserCreatePassenger: React.FC = () => {
               <Th color="white">Passenger Name</Th>
               <Th color="white">Passenger Email</Th>
               <Th color="white">Passenger Phone Number</Th>
+              <Th color="white">Passenger Type</Th>
               <Th color="white">Give Address</Th>
             </Tr>
           </Thead>
@@ -144,6 +171,7 @@ const UserCreatePassenger: React.FC = () => {
                 <Td>{passengerInfo.passengerName}</Td>
                 <Td>{passengerInfo.email}</Td>
                 <Td>{passengerInfo.phoneNumber}</Td>
+                <Td>{passengerInfo.passengerType}</Td>
                 <Td>
                   <Button
                     as={Link}

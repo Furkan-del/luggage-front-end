@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Box, Heading, FormControl, FormLabel, Input, Button, VStack, useColorModeValue } from '@chakra-ui/react';
+import { Box, Heading, FormControl, FormLabel, Input, Button, VStack, useColorModeValue, useToast } from '@chakra-ui/react';
 import AppService from './services/AppService';
 import UserUpdate from './types/UserUpdate';
 
 
 const EditUserProfile: React.FC = () => {
   const [userUpdate, setUserUpdate] = useState<UserUpdate>({ fullName: '', phoneNumber: ''});
-
+  const toast = useToast();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setUserUpdate({ ...userUpdate, [name]: value });
@@ -20,7 +20,13 @@ const EditUserProfile: React.FC = () => {
     }
     AppService.updateUserInfo(updateUserInfo).then((response:any ) => {
     setUserUpdate(response.data)
-    alert("User updated successfully")
+    toast({
+      title: "User Profile informations updated.",
+      description: "The user profile informations has been saved successfully.",
+      status: "success",
+      duration: 5000,
+      isClosable: true,
+    });
     }).catch((e:Error) => { 
       console.log(e)
     })
