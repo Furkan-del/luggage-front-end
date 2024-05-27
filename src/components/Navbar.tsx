@@ -8,9 +8,9 @@ import HomePage from "./HomePage";
   HomePage
       </NavLink>
       <NavLink to="/backoffice/createFlight">Create Flight</NavLink>
-      <NavLink to="/backoffice/luggages">Luggages</NavLink>
+      {/*<NavLink to="/backoffice/luggages">Luggages</NavLink> */}
       <NavLink to="/backoffice/flights">Flights</NavLink>
-      <NavLink to="/backoffice/passengers">Passengers</NavLink>
+     {/* <NavLink to="/backoffice/passengers">Passengers</NavLink> */}
     </nav>
   );
 }

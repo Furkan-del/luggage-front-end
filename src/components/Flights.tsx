@@ -79,7 +79,6 @@ const Flights = () => {
               <Th isNumeric>Flight Date</Th>
               <Th >Departure Location</Th>
               <Th >Arrival Location</Th>
-              <Th >Baggage Name</Th>
               <Th>Flight Detail</Th>
             </Tr>
           </Thead>
