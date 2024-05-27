@@ -6,7 +6,7 @@ import { Calendar } from 'primereact/calendar';
 import { Nullable } from 'primereact/ts-helpers';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
-import './CreateFlight.css'; 
+import './CreateFlight.css';
 
 const CreateFlight = () => {
   const [firstDate, setFirstDate] = useState<Nullable<Date>>(null);
@@ -28,6 +28,17 @@ const CreateFlight = () => {
   const [submitted, setSubmitted] = useState<boolean>(false);
 
   const saveTutorial = () => {
+    if (!/^\d{5}$/.test(flight.pnrCode)) {
+      toast({
+        title: "Invalid PNR Code.",
+        description: "PNR Code must be exactly 5 digits.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
+
     var flightData = {
       pnrCode: flight.pnrCode,
       departureLocation: flight.departureLocation,
@@ -65,6 +76,13 @@ const CreateFlight = () => {
         });
       })
       .catch((e: Error) => {
+        toast({
+          title: "An error occurred.",
+          description: "Unable to create flight.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
         console.log(e);
       });
   };
@@ -92,12 +110,14 @@ const CreateFlight = () => {
               value={flight.arrivalLocation}
               onChange={(e) => setFlight({ ...flight, arrivalLocation: e.target.value })}
               placeholder='From'
+              style={{ fontWeight: flight.arrivalLocation ? 'normal' : 'bold' }}
             />
             <Input
               type="text"
               value={flight.departureLocation}
               onChange={(e) => setFlight({ ...flight, departureLocation: e.target.value })}
               placeholder='To'
+              style={{ fontWeight: flight.departureLocation ? 'normal' : 'bold' }}
             />
             <Calendar
               value={firstDate}
@@ -129,7 +149,7 @@ const CreateFlight = () => {
               type="text"
               value={flight.pnrCode}
               onChange={(e) => setFlight({ ...flight, pnrCode: e.target.value })}
-              placeholder='PNR Code'
+              placeholder='PNR Code (5 digits)'
             />
             <Button onClick={saveTutorial} colorScheme='orange' width="100%">SEND</Button>
           </Stack>
