@@ -40,7 +40,7 @@ const Flights = () => {
       if( searchTitle.length > 0) {
         AppService.findByPnrCode(searchTitle)
         .then((response : any) => {
-          let flightsTemp = flights.filter(flight => flight.pnrCode === response.data.pnrCode);
+          let flightsTemp = flights.filter(flight => flight.pnrCode == response.data.pnrCode);
           setFlights(flightsTemp);
         } )
         .catch((e:Error) => {

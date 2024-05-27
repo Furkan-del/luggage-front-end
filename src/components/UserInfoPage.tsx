@@ -39,7 +39,7 @@ const UserProfile: React.FC = () => {
         <Text fontSize="lg"><strong>Email:</strong> {user.mail}</Text>
         <Text fontSize="lg"><strong>Phone Number:</strong> {user.phoneNumber}</Text>
         {/* Add more user info as needed */}
-        <Button mt={4} colorScheme="orange" onClick={() => window.location.href = '/userside/editprofile'}>
+        <Button mt={4} colorScheme="orange" onClick={() => window.location.href = '/userside/auth/editprofile'}>
           Edit Profile
         </Button>
       </VStack>
