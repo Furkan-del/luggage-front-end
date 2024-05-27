@@ -15,7 +15,6 @@ import AppService from './services/AppService';
 import { useParams } from 'react-router-dom';
 
 import { Button } from '@chakra-ui/react';
-import UpdateLuggageRequest from './types/UpdateLuggage';
  
   const Luggages = () => {
 
