@@ -49,7 +49,7 @@ import { Link, useParams } from 'react-router-dom';
       <Tr>
         <Th>Passenger ID</Th>
         <Th>Name</Th>
-        <Th >Email</Th>
+        <Th >Emaill</Th>
         <Th >Phone Number</Th>
         <Th >Luggage Detail</Th>
       </Tr>

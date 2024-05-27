@@ -149,7 +149,7 @@ const CreateFlight = () => {
               type="text"
               value={flight.pnrCode}
               onChange={(e) => setFlight({ ...flight, pnrCode: e.target.value })}
-              placeholder='PNR Code (5 digits)'
+              placeholder='PNR Code (6 digits)'
             />
             <Button onClick={saveTutorial} colorScheme='orange' width="100%">SEND</Button>
           </Stack>
