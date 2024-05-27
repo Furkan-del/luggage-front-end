@@ -61,7 +61,7 @@ import { Link, useParams } from 'react-router-dom';
         <Td> {passenger.passengerName} </Td>
         <Td > {passenger.email} </Td>
         <Td > {passenger.phoneNumber} </Td>
-        <Td> <Link to = {`/flights/${flightId}/passengers/${passenger.id}/luggages`}> See Luggages </Link> </Td>
+        <Td> <Link to = {`/backoffice/flights/${flightId}/passengers/${passenger.id}/luggages`}> See Luggages </Link> </Td>
       </Tr>
       ))}
     </Tbody>
