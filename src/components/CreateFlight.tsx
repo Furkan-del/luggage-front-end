@@ -28,10 +28,10 @@ const CreateFlight = () => {
   const [submitted, setSubmitted] = useState<boolean>(false);
 
   const saveTutorial = () => {
-    if (!/^\d{5}$/.test(flight.pnrCode)) {
+    if (!/^\d{6}$/.test(flight.pnrCode)) {
       toast({
         title: "Invalid PNR Code.",
-        description: "PNR Code must be exactly 5 digits.",
+        description: "PNR Code must be exactly 6 digits.",
         status: "error",
         duration: 5000,
         isClosable: true,
