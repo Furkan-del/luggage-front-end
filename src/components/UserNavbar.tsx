@@ -1,8 +1,9 @@
 
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import './UserNavbar.css'; 
 
 const UserNavbar = () => {
+
   return (
     <nav className="navbar-container">
       <NavLink to="/auth/:userId/flights">Home</NavLink> 

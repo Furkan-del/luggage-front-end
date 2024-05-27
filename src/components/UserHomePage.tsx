@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import {Link} from "react-router-dom"
 import AppService from "./services/AppService";
 import FlightResponse from "./types/FlightResponse";
-import AuthService from "./services/AuthService";
 
  const UserHomePage = () => {
     const [flights, setFlights] = useState<FlightResponse[]>([]);

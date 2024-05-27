@@ -79,7 +79,6 @@ const Flights = () => {
               <Th isNumeric>Flight Date</Th>
               <Th >Departure Location</Th>
               <Th >Arrival Location</Th>
-              <Th>Flight Detail</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -91,9 +90,6 @@ const Flights = () => {
                   <Td>{flight.departureDate}</Td>
                   <Td>{flight.departureLocation}</Td>
                   <Td>{flight.arrivalLocation}</Td>
-                  <Td>
-                    {flight?.luggages?.map((luggageInfo) => luggageInfo.name)}
-                  </Td>
                   <Td>
                     <Link to={`/backoffice/flights/${flight.id}/passengers`}>
                       See Passengers
