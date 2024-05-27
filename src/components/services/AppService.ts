@@ -84,7 +84,7 @@ const updateLuggage = (flightId:any,passengerId:any,luggageId:any, state : any )
         "Access-Control-Allow-Origin": "*",
         "Authorization": `Bearer ${TOKEN}`
     };
-    return axios.put<any>(`${API_URL}/flights/${flightId}/passengers/${passengerId}/luggages/${luggageId}`,state,{ headers })
+    return axios.put<any>(`/flights/${flightId}/passengers/${passengerId}/luggages/${luggageId}`,state,{ headers })
 }
 
 const findByPnrCode = (pnrCode:string) => {
