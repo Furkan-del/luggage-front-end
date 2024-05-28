@@ -1,72 +1,90 @@
 import {
-    Heading,
-    Table,
-    Thead,
-    Tbody,
-    Tr,
-    Th,
-    Td,
-    TableContainer,
-  } from '@chakra-ui/react' 
-import { useEffect, useState } from 'react'
-import PassengerResponse from './types/PassengerResponse'
+  Heading,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  TableContainer,
+  Box,
+  Button,
+  useToast,
+  Link as ChakraLink
+} from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
+import PassengerResponse from './types/PassengerResponse';
 import AppService from './services/AppService';
 import { Link, useParams } from 'react-router-dom';
 
+const Passenger = () => {
+  const { flightId } = useParams();
+  const [passengers, setPassengers] = useState<PassengerResponse[]>([]);
+  const toast = useToast();
 
-  const Passenger = () => {
-    // useParams urlden id gibi değişken değerlerini çekmemizi sağlar bu sayede backende istek atarız o değerlerle.
-    const { flightId }= useParams();
-  const [passengers,setPassengers] = useState<PassengerResponse []> ([]);
-  
-  // uygulamanın renderlanmadan önce bu queryi çalıştırır lakin burada şu önemli eğer bir değer paslanıyorsa içine.
-  // o değer değiştiğinde çalışır aynıysa bidaha query atmaz.
-    useEffect(() => {
-      if(flightId)
-    retrievePassengers(flightId);
-    },[flightId])
+  useEffect(() => {
+    if (flightId) retrievePassengers(flightId);
+  }, [flightId]);
 
-    const retrievePassengers = (flightId:any) => {
-      AppService.getAllPassengers(flightId)
-      .then((response:any) => {
-        setPassengers(response.data)
-        console.log(response.data)
+  const retrievePassengers = (flightId: any) => {
+    AppService.getAllPassengers(flightId)
+      .then((response: any) => {
+        setPassengers(response.data);
+        toast({
+          title: "Passengers retrieved.",
+          description: "Passenger data has been successfully retrieved.",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
       })
-      .catch( (e:Error) => {
-        console.log(e)
-      })
+      .catch((e: Error) => {
+        toast({
+          title: "An error occurred.",
+          description: "Unable to retrieve passengers.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+        console.log(e);
+      });
+  };
 
-      
-    }
+  return (
+    <Box p={8}>
+      <Heading as="h1" size="lg" mb={4}>
+        Passengers
+      </Heading>
+      <TableContainer border="1px" borderRadius="md" borderColor="gray.200" bg="white">
+        <Table variant="simple">
+          <Thead bg="orange.500">
+            <Tr>
+              <Th color="white">Passenger ID</Th>
+              <Th color="white">Name</Th>
+              <Th color="white">Email</Th>
+              <Th color="white">Phone Number</Th>
+              <Th color="white">Luggage Detail</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {passengers.map((passenger) => (
+              <Tr key={passenger.id}>
+                <Td>{passenger.id}</Td>
+                <Td>{passenger.passengerName}</Td>
+                <Td>{passenger.email}</Td>
+                <Td>{passenger.phoneNumber}</Td>
+                <Td>
+                  <ChakraLink as={Link} to={`/backoffice/flights/${flightId}/passengers/${passenger.id}/luggages`} color="orange.500" textDecoration="underline">
+                    See Luggages
+                  </ChakraLink>
+                </Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
+      </TableContainer>
+    </Box>
+  );
+};
 
-    return( 
-    <TableContainer>
-      <Heading as="h1" size="lg">Passenger</Heading>
-  <Table variant='simple'>
-  
-
-    <Thead>
-      <Tr>
-        <Th>Passenger ID</Th>
-        <Th>Name</Th>
-        <Th >Emaill</Th>
-        <Th >Phone Number</Th>
-        <Th >Luggage Detail</Th>
-      </Tr>
-    </Thead>
-    <Tbody>
-      {passengers.map((passenger) => (
-      <Tr>
-        <Td>{passenger.id}</Td>
-        <Td> {passenger.passengerName} </Td>
-        <Td > {passenger.email} </Td>
-        <Td > {passenger.phoneNumber} </Td>
-        <Td> <Link to = {`/backoffice/flights/${flightId}/passengers/${passenger.id}/luggages`}> See Luggages </Link> </Td>
-      </Tr>
-      ))}
-    </Tbody>
-  </Table>
-</TableContainer> 
-    )
-}
-export default Passenger
+export default Passenger;
