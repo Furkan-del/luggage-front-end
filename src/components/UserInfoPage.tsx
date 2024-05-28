@@ -1,32 +1,53 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Heading, Text, Button, Spinner, VStack, Avatar, useColorModeValue } from '@chakra-ui/react';
+import { Box, Heading, Text, Button, Spinner, VStack, Avatar, useColorModeValue, List, ListItem } from '@chakra-ui/react';
 import User from './types/UserType';
+import Address from './types/Address';
 import AppService from './services/AppService';
 
 const UserProfile: React.FC = () => {
-  var initialUser = {
-    fullName:"",
-    mail:"",
-    phoneNumber:"",
-    username:""
-}
+  const initialUser: User = {
+    fullName: "",
+    mail: "",
+    phoneNumber: "",
+    username: "",
+    passengerId: "" // Ensure this field is included and populated
+  };
+
   const [user, setUser] = useState<User>(initialUser);
+  const [addresses, setAddresses] = useState<Address[]>([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     getUser();
   }, []);
 
-
   const getUser = () => {
-   AppService.getUser().then((response) => {  
-      setUser(response.data);
-      console.log(response.data)
-   }).catch((e:Error) => {
-     console.log(e)
-   })
+    AppService.getUser()
+      .then((response) => {
+        setUser(response.data);
+        if (response.data.passengerId) {
+          getAddresses(response.data.passengerId); // Fetch addresses after setting user
+        }
+      })
+      .catch((e: Error) => {
+        console.log(e);
+        setLoading(false);
+      });
   };
 
-  
-  if (!user) return <Spinner />;
+  const getAddresses = (passengerId: string) => {
+    AppService.getAddressesByPassengerId(passengerId)
+      .then((response) => {
+        setAddresses(response.data);
+        setLoading(false);
+      })
+      .catch((e: Error) => {
+        console.log(e);
+        setLoading(false);
+      });
+  };
+
+  if (loading) return <Spinner />;
 
   const bg = useColorModeValue('orange.100', 'orange.700');
   const color = useColorModeValue('orange.900', 'orange.100');
@@ -38,7 +59,27 @@ const UserProfile: React.FC = () => {
         <Heading as="h1" size="xl" mb={4}>{user.fullName}'s Profile</Heading>
         <Text fontSize="lg"><strong>Email:</strong> {user.mail}</Text>
         <Text fontSize="lg"><strong>Phone Number:</strong> {user.phoneNumber}</Text>
-        {/* Add more user info as needed */}
+
+        <Heading as="h2" size="md" mt={8} mb={4}>
+          Addresses
+        </Heading>
+        <List spacing={3}>
+          {addresses.map((address, index) => (
+            <ListItem key={index}>
+              <Box p={4} shadow="md" borderWidth="1px">
+                <Text><strong>Address Name:</strong> {address.addressName}</Text>
+                <Text><strong>Street:</strong> {address.street}</Text>
+                <Text><strong>Avenue:</strong> {address.avenue}</Text>
+                <Text><strong>Apartment Name:</strong> {address.apartmentName}</Text>
+                <Text><strong>Floor:</strong> {address.floor}</Text>
+                <Text><strong>Door Number:</strong> {address.doorNumber}</Text>
+                <Text><strong>City:</strong> {address.city}</Text>
+                <Text><strong>Country:</strong> {address.country}</Text>
+              </Box>
+            </ListItem>
+          ))}
+        </List>
+
         <Button mt={4} colorScheme="orange" onClick={() => window.location.href = '/userside/auth/editprofile'}>
           Edit Profile
         </Button>

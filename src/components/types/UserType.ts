@@ -3,5 +3,6 @@ export default interface UserType {
   mail: string;
   username: string;
   phoneNumber: string;
+  passengerId: string;
 }
 

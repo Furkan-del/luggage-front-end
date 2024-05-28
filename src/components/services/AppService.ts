@@ -87,6 +87,8 @@ const updateLuggage = (flightId:any,passengerId:any,luggageId:any, state : any )
     return axios.put<any>(`${API_URL}/flights/${flightId}/passengers/${passengerId}/luggages/${luggageId}`,state,{ headers })
 }
 
+
+
 const findByPnrCode = (pnrCode:string) => {
     const headers = {
         "Content-type": "application/json",
@@ -155,6 +157,14 @@ const getAddresses = (passengerId:any,addressId:any) => {
     return axios.get<any>(`/passengers/${passengerId}/addresses/${addressId}`,{ headers })
 }
 
+const getAddressesByPassengerId = (passengerId: string) => {
+    const headers = {
+      "Content-type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Authorization": `Bearer ${TOKEN}`
+    };
+    return axios.get<any>(`${API_URL}/passengers/${passengerId}/addresses`, { headers });
+  };
 const getUserInfo = (userId:any) => {
     
     const headers = {
@@ -208,5 +218,8 @@ export default {getAllFlights,getAllPassengers,getFlightById,
     getUser,
     createLuggage,
     checkInPassenger,
-    getPassengerByPassengerIdAndFlightIdAndUserId
+    getPassengerByPassengerIdAndFlightIdAndUserId,
+    getAddressesByPassengerId,
+    
+   
 }
