@@ -37,7 +37,7 @@ const UserProfile: React.FC = () => {
         <Avatar size="2xl" name={user.fullName} src="" />
         <Heading as="h1" size="xl" mb={4}>{user.fullName}'s Profile</Heading>
         <Text fontSize="lg"><strong>Email:</strong> {user.mail}</Text>
-        <Text fontSize="lg"><strong>Phone Number:</strong> {user.phoneNumber}</Text>
+        <Text fontSize="lg"><strong>Username</strong> {user.phoneNumber}</Text>
         {/* Add more user info as needed */}
         <Button mt={4} colorScheme="orange" onClick={() => window.location.href = '/userside/auth/editprofile'}>
           Edit Profile

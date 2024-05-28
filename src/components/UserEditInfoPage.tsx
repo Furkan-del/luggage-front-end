@@ -41,7 +41,7 @@ const EditUserProfile: React.FC = () => {
       <form onSubmit={handleSubmit}>
         <VStack spacing={4}>
           <FormControl id="fullName">
-            <FormLabel>Email</FormLabel>
+            <FormLabel>Full Name</FormLabel>
             <Input type="text" name="fullName" value={userUpdate.fullName} onChange={handleChange} />
           </FormControl>
           <FormControl id="username">
