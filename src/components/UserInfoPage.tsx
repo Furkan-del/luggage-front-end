@@ -5,13 +5,13 @@ import Address from './types/Address';
 import AppService from './services/AppService';
 
 const UserProfile: React.FC = () => {
-  const initialUser: User = {
-    fullName: "",
-    mail: "",
-    phoneNumber: "",
-    username: "",
-    passengerId: "" // Ensure this field is included and populated
-  };
+  var initialUser = {
+    fullName:"",
+    mail:"",
+    phoneNumber:"",
+    username:""
+}
+
 
   const [user, setUser] = useState<User>(initialUser);
   const [addresses, setAddresses] = useState<Address[]>([]);
@@ -58,28 +58,8 @@ const UserProfile: React.FC = () => {
         <Avatar size="2xl" name={user.fullName} src="" />
         <Heading as="h1" size="xl" mb={4}>{user.fullName}'s Profile</Heading>
         <Text fontSize="lg"><strong>Email:</strong> {user.mail}</Text>
-        <Text fontSize="lg"><strong>Phone Number:</strong> {user.phoneNumber}</Text>
-
-        <Heading as="h2" size="md" mt={8} mb={4}>
-          Addresses
-        </Heading>
-        <List spacing={3}>
-          {addresses.map((address, index) => (
-            <ListItem key={index}>
-              <Box p={4} shadow="md" borderWidth="1px">
-                <Text><strong>Address Name:</strong> {address.addressName}</Text>
-                <Text><strong>Street:</strong> {address.street}</Text>
-                <Text><strong>Avenue:</strong> {address.avenue}</Text>
-                <Text><strong>Apartment Name:</strong> {address.apartmentName}</Text>
-                <Text><strong>Floor:</strong> {address.floor}</Text>
-                <Text><strong>Door Number:</strong> {address.doorNumber}</Text>
-                <Text><strong>City:</strong> {address.city}</Text>
-                <Text><strong>Country:</strong> {address.country}</Text>
-              </Box>
-            </ListItem>
-          ))}
-        </List>
-
+        <Text fontSize="lg"><strong>Username</strong> {user.phoneNumber}</Text>
+        {/* Add more user info as needed */}
         <Button mt={4} colorScheme="orange" onClick={() => window.location.href = '/userside/auth/editprofile'}>
           Edit Profile
         </Button>

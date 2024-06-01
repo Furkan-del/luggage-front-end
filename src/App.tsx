@@ -23,6 +23,7 @@ import EditUserProfile from './components/UserEditInfoPage';
 import Login from './components/Login';
 import Register from './components/Register';
 import BackofficeLogin from './components/BackofficeLogin';
+import AddressDetail from './AddresDetail';
 
 function App() {
 
@@ -60,6 +61,7 @@ function App() {
                 <Route path="auth/my-profile" element={<UserInfoPage />} />
                 <Route path="auth/editprofile" element={<EditUserProfile />} />
                 <Route path="flights/:flightId/passengers/:passengerId/addresses" element={<UserAddressPage />} />
+                <Route path="flights/:flightId/passengers/:passengerId/addresses/:addressId" element={<AddressDetail/>} />
               </Routes>
             </>}
             

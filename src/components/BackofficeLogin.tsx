@@ -84,12 +84,7 @@ const BackofficeLogin = () => {
               onChange={(e) => setLoginRequest({ ...loginRequest, password: e.target.value })}
             />
             <Button onClick={handleClick} colorScheme='orange' width="100%">SEND</Button>
-            <Text>
-              If you don't have an account,{" "}
-              <Link onClick={() => navigate('/register')} color="orange.500" textDecoration="underline">
-                register here
-              </Link>
-            </Text>
+          
           </Stack>
         </Box>
       </Box>

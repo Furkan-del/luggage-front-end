@@ -1,6 +1,5 @@
 import { NavLink } from "react-router-dom";
 import './Navbar.css'
-import HomePage from "./HomePage";
  const NavBar =  () => {
   return (
     <nav className="navbar-container">

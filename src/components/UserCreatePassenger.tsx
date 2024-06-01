@@ -61,7 +61,9 @@ const UserCreatePassenger: React.FC = () => {
     }));
   };
 
+  
   const handleCreatePassengerSubmit = (e: React.FormEvent) => {
+  
     e.preventDefault();
     const createPassenger = {
       name: passenger.name,
@@ -70,7 +72,7 @@ const UserCreatePassenger: React.FC = () => {
       flight: flightId,
       passengerType: passenger.passengerType
     };
-      let passengerId ;
+      
     AppService.addPassenger(createPassenger, flightId)
       .then((response: any) => {
         setPassenger({
@@ -87,7 +89,8 @@ const UserCreatePassenger: React.FC = () => {
           duration: 5000,
           isClosable: true,
         });
-      
+        console.log(response.data);
+        
         retrievePassengersByIdAndFlightIdAndUserId(flightId,response.data.id,userId)
 
       })

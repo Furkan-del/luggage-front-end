@@ -3,9 +3,11 @@ import { NavLink } from 'react-router-dom';
 import './UserNavbar.css'; 
 
 const UserNavbar = () => {
+let userId = localStorage.getItem('userId')
+
   return (
     <nav className="navbar-container">
-      <NavLink to="/auth/:userId/flights">Home</NavLink> 
+      <NavLink to={`/userside/auth/${userId}/flights`}>Home</NavLink> 
        {/* <NavLink to="flights/:flightId/passengers">Create Passenger</NavLink> 
        <NavLink to="flights/:flightId/passengers/:passengerId/addresses"> Add Address</NavLink>
       <NavLink to="auth/flights/:flightId/passengers/:passengerId/luggages"> Add Luggage</NavLink> */}

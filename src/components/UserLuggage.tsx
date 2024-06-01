@@ -12,7 +12,7 @@ import {
   useToast
 } from '@chakra-ui/react';
 import AppService from './services/AppService';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import CreateLuggageRequest from './types/CreateLuggageRequest';
 
 interface Luggage {
@@ -21,6 +21,7 @@ interface Luggage {
 }
 
 const CreateLuggage: React.FC = () => {
+  let addressId = localStorage.getItem('addressId');
   const { flightId, passengerId } = useParams();
   const toast = useToast();
 
@@ -79,6 +80,10 @@ const CreateLuggage: React.FC = () => {
             </NumberInput>
           </FormControl>
           <Button type="submit" colorScheme="orange">Add Luggage</Button>
+          <Link
+          color='blue.500'
+          className='link' 
+          to={`/userside/flights/${flightId}/passengers/${passengerId}/addresses/${addressId}`}>Go to my address</Link>
         </VStack>
       </form>
       {luggageList.length > 0 && (
