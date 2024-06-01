@@ -146,13 +146,13 @@ const createAddress = (request:CreateAddressRequest,passengerId:any,flightId:any
 }
 
 
-const getAddresses = (passengerId:any,addressId:any) => {
+const getAddresses = (passengerId:any,addressId:any,flightId:any) => {
     const headers = {
         "Content-type": "application/json",
         "Access-Control-Allow-Origin": "*",
         "Authorization": `Bearer ${TOKEN}`
     };
-    return axios.get<any>(`/passengers/${passengerId}/addresses/${addressId}`,{ headers })
+    return axios.get<any>(`${API_URL}/flights/${flightId}/passengers/${passengerId}/addresses/${addressId}`,{ headers })
 }
 
 const getUserInfo = (userId:any) => {

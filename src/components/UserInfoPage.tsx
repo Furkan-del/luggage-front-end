@@ -10,11 +10,12 @@ const UserProfile: React.FC = () => {
     phoneNumber:"",
     username:""
 }
+
+
   const [user, setUser] = useState<User>(initialUser);
   useEffect(() => {
     getUser();
   }, []);
-
 
   const getUser = () => {
    AppService.getUser().then((response) => {  

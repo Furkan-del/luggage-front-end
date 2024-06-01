@@ -10,10 +10,11 @@ import {
   useToast
 } from '@chakra-ui/react';
 import AppService from './services/AppService';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import CreateAddressRequest from './types/CreateAddressRequest';
 
 const CreateAddress: React.FC = () => {
+  let addressId ;
   const navigate = useNavigate();
   const { passengerId, flightId } = useParams();
   const toast = useToast();
@@ -53,6 +54,8 @@ const CreateAddress: React.FC = () => {
     
     AppService.createAddress(createAddress, passengerId, flightId)
       .then((response: any) => {
+
+        addressId= localStorage.setItem('addressId', response.data.id);
         setAddress(response.data);
         toast({
           title: "Address created.",
