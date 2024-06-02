@@ -102,11 +102,6 @@ const Flights = () => {
         <Table variant="simple">
           <Thead bg="orange.500">
             <Tr>
-              <Th>Flight ID</Th>
-              <Th isNumeric>PNR Code</Th>
-              <Th isNumeric>Flight Date</Th>
-              <Th >Departure Location</Th>
-              <Th >Arrival Location</Th>
               <Th color="white">Flight ID</Th>
               <Th color="white" isNumeric>PNR Code</Th>
               <Th color="white" isNumeric>Flight Date</Th>
@@ -117,21 +112,21 @@ const Flights = () => {
             </Tr>
           </Thead>
           <Tbody>
-            { flights
-              .map((flight, index) => (
-                <Tr key={index}>
-                  <Td>{flight.id}</Td>
-                  <Td>{flight.pnrCode}</Td>
-                  <Td>{flight.departureDate}</Td>
-                  <Td>{flight.departureLocation}</Td>
-                  <Td>{flight.arrivalLocation}</Td>
-                  <Td>
-                    <Link to={`/backoffice/flights/${flight.id}/passengers`}>
-                      See Passengers
-                    </Link>
-                  </Td>
-                </Tr>
-              ))}
+            {flights.map((flight, index) => (
+              <Tr key={index}>
+                <Td>{flight.id}</Td>
+                <Td>{flight.pnrCode}</Td>
+                <Td>{new Date(flight.departureDate).toLocaleDateString()}</Td>
+                <Td>{flight.departureLocation}</Td>
+                <Td>{flight.arrivalLocation}</Td>
+                <Td>{flight?.luggages?.map((luggageInfo) => luggageInfo.name).join(', ')}</Td>
+                <Td>
+                  <ChakraLink as={Link} to={`/backoffice/flights/${flight.id}/passengers`} color="orange.500" textDecoration="underline">
+                    See Passengers
+                  </ChakraLink>
+                </Td>
+              </Tr>
+            ))}
           </Tbody>
         </Table>
       </TableContainer>
