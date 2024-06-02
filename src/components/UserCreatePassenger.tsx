@@ -8,6 +8,7 @@ import {
   FormLabel,
   Heading,
   Input,
+  Select,
   Table,
   TableContainer,
   Tbody,
@@ -33,6 +34,7 @@ const UserCreatePassenger: React.FC = () => {
   const { flightId } = useParams();
   const userId = localStorage.getItem('userId');
   const [passengers, setPassengers] = useState<PassengerResponse[]>([]);
+  const [passengerType, setPassengerType] = useState<string>("");
 
   const retrievePassengersByIdAndFlightIdAndUserId = (flightId: any,passengerId: any,userId: any) => {
     AppService.getPassengerByPassengerIdAndFlightIdAndUserId(flightId,passengerId,userId)
@@ -70,7 +72,7 @@ const UserCreatePassenger: React.FC = () => {
       email: passenger.email,
       phoneNumber: passenger.phoneNumber,
       flight: flightId,
-      passengerType: passenger.passengerType
+      passengerType: passengerType
     };
       
     AppService.addPassenger(createPassenger, flightId)
@@ -104,6 +106,10 @@ const UserCreatePassenger: React.FC = () => {
         });
       });
   };
+
+  useEffect(() => {
+      retrievePassengersByIdAndFlightIdAndUserId(flightId,passenger.id,userId);
+  },[])
   
   const handleCheckIn = (passengerId: any) => {
     AppService.checkInPassenger(flightId, passengerId)
@@ -165,15 +171,18 @@ const UserCreatePassenger: React.FC = () => {
         </FormControl>
 
         <FormControl mb={4}>
-          <FormLabel>Passenger Type</FormLabel>
-          <Input
-            type="text"
-            name="passengerType"
-            value={passenger.passengerType}
-            onChange={handleChange}
-            placeholder="Enter your passenger type ADULT/CHILD"
-          />
-        </FormControl>
+  <FormLabel>Passenger Type</FormLabel>
+  <Select
+    name="passengerType"
+    value={passengerType}
+    onChange={(e) => setPassengerType(e.target.value as any)}
+    placeholder="Select passenger type"
+  >
+    <option value="ADULT">ADULT</option>
+    <option value="CHILD">CHILD</option>
+    <option value="STUDENT">STUDENT</option>
+  </Select>
+</FormControl>
 
         <Button
           type="submit"
