@@ -108,9 +108,8 @@ const Flights = () => {
               <Th color="white">Departure Location</Th>
               <Th color="white">Arrival Location</Th>
               <Th color="white">Luggages</Th>
-              <Th color="white">Flight Detail</Th>
             </Tr>
-          </Thead>
+          </Thead>    
           <Tbody>
             { flights
               .map((flight, index) => (
