@@ -77,11 +77,11 @@ const UserCreatePassenger: React.FC = () => {
       .then((response: any) => {
         const newPassengerId = response.data.id;
         setPassenger({
-          name: '',
-          email: '',
-          phoneNumber: '',
-          id: '',
-          passengerType: ''
+          name: passenger.name,
+          email: passenger.email,
+          phoneNumber: passenger.phoneNumber,
+          id: passenger.id,
+          passengerType: passengerType
         });
         toast({
           title: "Passenger created.",
@@ -106,7 +106,7 @@ const UserCreatePassenger: React.FC = () => {
 
   useEffect(() => {
     retrievePassengersByIdAndFlightIdAndUserId(flightId, passenger.id, userId);
-  }, [flightId, passenger.id, userId]);
+  }, [flightId,  userId]);
 
   const handleCheckIn = (passengerId: any) => {
     AppService.checkInPassenger(flightId, passengerId)
