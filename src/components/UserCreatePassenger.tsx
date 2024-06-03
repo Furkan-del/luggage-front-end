@@ -36,8 +36,8 @@ const UserCreatePassenger: React.FC = () => {
   const [passengers, setPassengers] = useState<PassengerResponse[]>([]);
   const [passengerType, setPassengerType] = useState<string>("");
 
-  const retrievePassengersByIdAndFlightIdAndUserId = (flightId: any,passengerId: any,userId: any) => {
-    AppService.getPassengerByPassengerIdAndFlightIdAndUserId(flightId,passengerId,userId)
+  const retrievePassengersByIdAndFlightIdAndUserId = (flightId: any, passengerId: any, userId: any) => {
+    AppService.getPassengerByPassengerIdAndFlightIdAndUserId(flightId, passengerId, userId)
       .then((response: any) => {
         setPassengers(response.data);
         console.log(response.data);
@@ -63,9 +63,7 @@ const UserCreatePassenger: React.FC = () => {
     }));
   };
 
-  
   const handleCreatePassengerSubmit = (e: React.FormEvent) => {
-  
     e.preventDefault();
     const createPassenger = {
       name: passenger.name,
@@ -74,9 +72,10 @@ const UserCreatePassenger: React.FC = () => {
       flight: flightId,
       passengerType: passengerType
     };
-      
+
     AppService.addPassenger(createPassenger, flightId)
       .then((response: any) => {
+        const newPassengerId = response.data.id;
         setPassenger({
           name: '',
           email: '',
@@ -92,9 +91,7 @@ const UserCreatePassenger: React.FC = () => {
           isClosable: true,
         });
         console.log(response.data);
-        
-        retrievePassengersByIdAndFlightIdAndUserId(flightId,response.data.id,userId)
-
+        retrievePassengersByIdAndFlightIdAndUserId(flightId, newPassengerId, userId);
       })
       .catch((e: Error) => {
         toast({
@@ -108,12 +105,12 @@ const UserCreatePassenger: React.FC = () => {
   };
 
   useEffect(() => {
-      retrievePassengersByIdAndFlightIdAndUserId(flightId,passenger.id,userId);
-  },[])
-  
+    retrievePassengersByIdAndFlightIdAndUserId(flightId, passenger.id, userId);
+  }, [flightId, passenger.id, userId]);
+
   const handleCheckIn = (passengerId: any) => {
     AppService.checkInPassenger(flightId, passengerId)
-      .then((response:any) => {
+      .then((response: any) => {
         toast({
           title: "Checked in.",
           description: "The passenger has been checked in successfully.",
@@ -121,6 +118,7 @@ const UserCreatePassenger: React.FC = () => {
           duration: 5000,
           isClosable: true,
         });
+        retrievePassengersByIdAndFlightIdAndUserId(flightId, passengerId, userId);
       })
       .catch((e: Error) => {
         toast({
@@ -169,21 +167,19 @@ const UserCreatePassenger: React.FC = () => {
             placeholder="Enter your phone number"
           />
         </FormControl>
-
         <FormControl mb={4}>
-  <FormLabel>Passenger Type</FormLabel>
-  <Select
-    name="passengerType"
-    value={passengerType}
-    onChange={(e) => setPassengerType(e.target.value as any)}
-    placeholder="Select passenger type"
-  >
-    <option value="ADULT">ADULT</option>
-    <option value="CHILD">CHILD</option>
-    <option value="STUDENT">STUDENT</option>
-  </Select>
-</FormControl>
-
+          <FormLabel>Passenger Type</FormLabel>
+          <Select
+            name="passengerType"
+            value={passengerType}
+            onChange={(e) => setPassengerType(e.target.value as any)}
+            placeholder="Select passenger type"
+          >
+            <option value="ADULT">ADULT</option>
+            <option value="CHILD">CHILD</option>
+            <option value="STUDENT">STUDENT</option>
+          </Select>
+        </FormControl>
         <Button
           type="submit"
           colorScheme="orange"
