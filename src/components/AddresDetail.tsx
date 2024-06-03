@@ -82,5 +82,4 @@ const AddressDetail: React.FC = () => {
      </Box>
   );
 };
-
 export default AddressDetail;
