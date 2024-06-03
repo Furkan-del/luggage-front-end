@@ -23,7 +23,7 @@ import EditUserProfile from './components/UserEditInfoPage';
 import Login from './components/Login';
 import Register from './components/Register';
 import BackofficeLogin from './components/BackofficeLogin';
-import AddressDetail from './AddresDetail';
+import AddressDetail from './components/AddresDetail';
 
 function App() {
 

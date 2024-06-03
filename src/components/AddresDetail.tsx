@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Box, Heading, Spinner, useToast, Text } from '@chakra-ui/react';
-import AppService from './components/services/AppService';
+import AppService from './services/AppService';
 
 const AddressDetail: React.FC = () => {
   let addressId = localStorage.getItem('addressId');
@@ -82,5 +82,4 @@ const AddressDetail: React.FC = () => {
      </Box>
   );
 };
-
 export default AddressDetail;
