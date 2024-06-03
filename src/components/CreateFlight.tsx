@@ -86,7 +86,6 @@ const CreateFlight = () => {
         console.log(e);
       });
   };
-
   const addNewFlight = () => {
     setFlight(initialCreateFlightRequest);
     setFirstDate(null);
