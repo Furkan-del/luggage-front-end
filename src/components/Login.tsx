@@ -21,7 +21,7 @@ const Login = () => {
         (response: any) => {
           setLoginRequest(response);
           navigate(`/userside/auth/${response.userId}/flights`);
-          localStorage.setItem("userId", response.userId)
+          localStorage.setItem("userId", response.userId);
         }
       )
       .catch((e: Error) => console.log(e));
@@ -40,12 +40,12 @@ const Login = () => {
         left="0"
         width="100%"
         height="100%"
-        backgroundImage={`url(${airportImage })`} 
+        backgroundImage={`url(${airportImage})`} 
         backgroundSize="cover" 
         backgroundPosition="center" 
         backgroundRepeat="no-repeat" 
-        filter="brightness(0.7) grayscale(0.5) " // Parlaklığı  ve görünülük buradan ayarlanacak
-        opacity="0.8" // görünürütlk ayarı
+        filter="brightness(0.7) grayscale(0.5)" // Adjust brightness and visibility here
+        opacity="0.8" // Visibility setting
         zIndex="0"
       />
       <Box 
@@ -80,6 +80,7 @@ const Login = () => {
               width="100%"
               placeholder='Password'
               size='md'
+              type="password" // Add this line
               id="password"
               name="password"
               onChange={(e) => setLoginRequest({ ...loginRequest, password: e.target.value })}

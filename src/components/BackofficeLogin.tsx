@@ -1,4 +1,4 @@
-import { Box, Input, Stack, Heading, Button, Text, Link } from '@chakra-ui/react';
+import { Box, Input, Stack, Heading, Button } from '@chakra-ui/react';
 import AuthService from './services/AuthService';
 import { useState } from 'react';
 import LoginRequest from './types/LoginRequest';
@@ -79,6 +79,7 @@ const BackofficeLogin = () => {
               width="100%"
               placeholder='Password'
               size='md'
+              type="password" // Add this line
               id="password"
               name="password"
               onChange={(e) => setLoginRequest({ ...loginRequest, password: e.target.value })}
