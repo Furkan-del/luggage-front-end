@@ -3,10 +3,10 @@ import { Box, Heading, FormControl, FormLabel, Input, Button, VStack, useColorMo
 import AppService from './services/AppService';
 import UserUpdate from './types/UserUpdate';
 
-
 const EditUserProfile: React.FC = () => {
-  const [userUpdate, setUserUpdate] = useState<UserUpdate>({ fullName: '', phoneNumber: ''});
+  const [userUpdate, setUserUpdate] = useState<UserUpdate>({ fullName: '', phoneNumber: '' });
   const toast = useToast();
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setUserUpdate({ ...userUpdate, [name]: value });
@@ -14,22 +14,43 @@ const EditUserProfile: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    var updateUserInfo= {
+    
+    if (!userUpdate.fullName || !userUpdate.phoneNumber) {
+      toast({
+        title: "Error",
+        description: "Full Name and Phone Number cannot be empty.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
+
+    const updateUserInfo = {
       fullName: userUpdate.fullName,
       phoneNumber: userUpdate.phoneNumber
+    };
+
+    try {
+      const response = await AppService.updateUserInfo(updateUserInfo);
+      setUserUpdate(response.data);
+      toast({
+        title: "User Profile Information Updated",
+        description: "The user profile information has been saved successfully.",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
+    } catch (e: any) {
+      console.log(e);
+      toast({
+        title: "Error",
+        description: "An error occurred while updating the profile.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
     }
-    AppService.updateUserInfo(updateUserInfo).then((response:any ) => {
-    setUserUpdate(response.data)
-    toast({
-      title: "User Profile informations updated.",
-      description: "The user profile informations has been saved successfully.",
-      status: "success",
-      duration: 5000,
-      isClosable: true,
-    });
-    }).catch((e:Error) => { 
-      console.log(e)
-    })
   };
 
   const bg = useColorModeValue('orange.100', 'orange.700');
@@ -44,8 +65,8 @@ const EditUserProfile: React.FC = () => {
             <FormLabel>Full Name</FormLabel>
             <Input type="text" name="fullName" value={userUpdate.fullName} onChange={handleChange} />
           </FormControl>
-          <FormControl id="username">
-            <FormLabel>Username</FormLabel>
+          <FormControl id="phoneNumber">
+            <FormLabel>Phone Number</FormLabel>
             <Input type="text" name="phoneNumber" value={userUpdate.phoneNumber} onChange={handleChange} />
           </FormControl>
           <Button type="submit" colorScheme="orange">Save Changes</Button>

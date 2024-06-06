@@ -1,4 +1,4 @@
-import { Box, Input, Stack, Heading, Button, Text, Link } from '@chakra-ui/react';
+import { Box, Input, Stack, Heading, Button, Text, Link, useToast } from '@chakra-ui/react';
 import AuthService from './services/AuthService';
 import { useState } from 'react';
 import LoginRequest from './types/LoginRequest';
@@ -7,6 +7,7 @@ import airportImage from '../images/airport1.png';
 
 const Login = () => {
   const navigate = useNavigate();
+  const toast = useToast();
 
   let initialLoginRequest = {
     username: "",
@@ -24,7 +25,16 @@ const Login = () => {
           localStorage.setItem("userId", response.userId);
         }
       )
-      .catch((e: Error) => console.log(e));
+      .catch((e: Error) => {
+        console.log(e);
+        toast({
+          title: "Login Failed",
+          description: "Incorrect username or password. Please try again.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      });
   };
 
   return (

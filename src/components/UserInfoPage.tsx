@@ -1,26 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Heading, Text, Button, Spinner, VStack, Avatar, useColorModeValue } from '@chakra-ui/react';
-import User from './types/UserType';
-import Address from './types/Address';
 import AppService from './services/AppService';
 
-const UserProfile: React.FC = () => {
-interface UserResponse{
-  id:any,
-    mail: any,
-    phoneNumber: any,
-    fullName: any
+interface UserResponse {
+  id: string;
+  mail: string;
+  phoneNumber: string;
+  fullName: string;
 }
 
-  const initialUser = {
-    id:"",
+const UserProfile: React.FC = () => {
+  const initialUser: UserResponse = {
+    id: "",
     mail: "",
     phoneNumber: "",
-    fullName: "",
+    fullName: ""
   };
 
   const [user, setUser] = useState<UserResponse>(initialUser);
-  const [addresses, setAddresses] = useState<Address[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -30,21 +27,8 @@ interface UserResponse{
   const getUser = () => {
     AppService.getUser()
       .then((response) => {
+        console.log("User data received:", response.data); // Log to check the response
         setUser(response.data);
-        if (response.data.passengerId) {
-          getAddresses(response.data.passengerId); // Fetch addresses after setting user
-        }
-      })
-      .catch((e: Error) => {
-        console.log(e);
-        setLoading(false);
-      });
-  };
-
-  const getAddresses = (passengerId: string) => {
-    AppService.getAddressesByPassengerId(passengerId)
-      .then((response) => {
-        setAddresses(response.data);
         setLoading(false);
       })
       .catch((e: Error) => {
@@ -62,9 +46,9 @@ interface UserResponse{
     <Box p={5} shadow="md" borderWidth="1px" bg={bg} color={color} borderRadius="md">
       <VStack spacing={4}>
         <Avatar size="2xl" name={user.fullName} src="" />
+        <Heading as="h2" size="lg">{user.fullName}</Heading>
         <Text fontSize="lg"><strong>Email:</strong> {user.mail}</Text>
-        <Text fontSize="lg"><strong>Phone Number:</strong> {user.phoneNumber}</Text>
-        {/* Add more user info as needed */}
+        <Text fontSize="lg"><strong>Phonenumber:</strong> {user.phoneNumber}</Text>
         <Button mt={4} colorScheme="orange" onClick={() => window.location.href = '/userside/auth/editprofile'}>
           Edit Profile
         </Button>
