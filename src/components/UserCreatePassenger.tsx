@@ -34,7 +34,7 @@ const UserCreatePassenger: React.FC = () => {
   const { flightId } = useParams();
   const userId = localStorage.getItem('userId');
   const [passengers, setPassengers] = useState<PassengerResponse[]>([]);
-  const [passengerType, setPassengerType] = useState<string>("");
+  const [passengerType, setPassengerType] = useState<string>('');
 
   const retrievePassengersByIdAndFlightIdAndUserId = (flightId: any, passengerId: any, userId: any) => {
     AppService.getPassengerByPassengerIdAndFlightIdAndUserId(flightId, passengerId, userId)
@@ -75,14 +75,16 @@ const UserCreatePassenger: React.FC = () => {
 
     AppService.addPassenger(createPassenger, flightId)
       .then((response: any) => {
-        const newPassengerId = response.data.id;
+        const newPassenger = response.data;
+        setPassengers((prevState) => [...prevState, newPassenger]);
         setPassenger({
-          name: passenger.name,
-          email: passenger.email,
-          phoneNumber: passenger.phoneNumber,
-          id: passenger.id,
-          passengerType: passengerType
+          name: '',
+          email: '',
+          phoneNumber: '',
+          id: '',
+          passengerType: ''
         });
+        setPassengerType('');
         toast({
           title: "Passenger created.",
           description: "The passenger has been created successfully.",
@@ -91,7 +93,6 @@ const UserCreatePassenger: React.FC = () => {
           isClosable: true,
         });
         console.log(response.data);
-        retrievePassengersByIdAndFlightIdAndUserId(flightId, newPassengerId, userId);
       })
       .catch((e: Error) => {
         toast({
@@ -106,7 +107,7 @@ const UserCreatePassenger: React.FC = () => {
 
   useEffect(() => {
     retrievePassengersByIdAndFlightIdAndUserId(flightId, passenger.id, userId);
-  }, [flightId,  userId]);
+  }, [flightId, userId]);
 
   const handleCheckIn = (passengerId: any) => {
     AppService.checkInPassenger(flightId, passengerId)
@@ -172,7 +173,7 @@ const UserCreatePassenger: React.FC = () => {
           <Select
             name="passengerType"
             value={passengerType}
-            onChange={(e) => setPassengerType(e.target.value as any)}
+            onChange={(e) => setPassengerType(e.target.value)}
             placeholder="Select passenger type"
           >
             <option value="ADULT">ADULT</option>

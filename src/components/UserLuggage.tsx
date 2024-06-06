@@ -80,10 +80,14 @@ const CreateLuggage: React.FC = () => {
             </NumberInput>
           </FormControl>
           <Button type="submit" colorScheme="orange">Add Luggage</Button>
-          <Link
-          color='blue.500'
-          className='link' 
-          to={`/userside/flights/${flightId}/passengers/${passengerId}/addresses/${addressId}`}>Go to my address</Link>
+          <Button
+            as={Link}
+            to={`/userside/flights/${flightId}/passengers/${passengerId}/addresses/${addressId}`}
+            colorScheme="blue"
+            mt={4}
+          >
+            Go to my address
+          </Button>
         </VStack>
       </form>
       {luggageList.length > 0 && (

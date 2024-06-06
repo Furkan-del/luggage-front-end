@@ -11,7 +11,6 @@ import {
   Button,
   Box,
   useToast,
-  Link as ChakraLink
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import FlightResponse from './types/FlightResponse';
@@ -20,7 +19,7 @@ import { Link } from 'react-router-dom';
 
 const Flights = () => {
   const [flights, setFlights] = useState<FlightResponse[]>([]);
-  const [searchTitle, setsearchTitle] = useState<string>('');
+  const [searchTitle, setSearchTitle] = useState<string>('');
   const toast = useToast();
 
   useEffect(() => {
@@ -52,7 +51,7 @@ const Flights = () => {
   };
 
   const findByPnrCode = (searchTitle: string) => {
-    setsearchTitle(searchTitle);
+    setSearchTitle(searchTitle);
     if (searchTitle.length > 0) {
       AppService.findByPnrCode(searchTitle)
         .then((response: any) => {
@@ -111,21 +110,25 @@ const Flights = () => {
             </Tr>
           </Thead>    
           <Tbody>
-            { flights
-              .map((flight, index) => (
-                <Tr key={index}>
-                  <Td>{flight.id}</Td>
-                  <Td>{flight.pnrCode}</Td>
-                  <Td>{flight.departureDate}</Td>
-                  <Td>{flight.departureLocation}</Td>
-                  <Td>{flight.arrivalLocation}</Td>
-                  <Td>
-                    <Link to={`/backoffice/flights/${flight.id}/passengers`}>
-                      See Passengers
-                    </Link>
-                  </Td>
-                </Tr>
-              ))}
+            {flights.map((flight, index) => (
+              <Tr key={index}>
+                <Td>{flight.id}</Td>
+                <Td>{flight.pnrCode}</Td>
+                <Td>{flight.departureDate}</Td>
+                <Td>{flight.departureLocation}</Td>
+                <Td>{flight.arrivalLocation}</Td>
+                <Td>
+                  <Button
+                    as={Link}
+                    to={`/backoffice/flights/${flight.id}/passengers`}
+                    colorScheme="orange"
+                    size="sm"
+                  >
+                    See Passengers
+                  </Button>
+                </Td>
+              </Tr>
+            ))}
           </Tbody>
         </Table>
       </TableContainer>
